@@ -85,7 +85,7 @@
                 </a>
             </li>
              <li>
-                <a href="#">
+                <a href="<c:url value="/reserve" />">
                     	예매
                 </a>
             </li>
