@@ -80,7 +80,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar">
             <li>
-                <a href="#">
+               <a href="<c:url value="/movie" />">
                     	영화
                 </a>
             </li>

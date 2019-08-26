@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
+<mapper namespace="com.project.movie.dao.MovieDao">
+	
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultMovieInfo"
+		type="com.project.movie.domain.MovieInfo">
+		<id property="midx" column="midx" />
+		<result property="mName" column="mName" />
+		<result property="mCont" column="mCont" />
+		<result property="mPer" column="mPer" />
+		<result property="mDate" column="mDate" />
+		<result property="mPhoto" column="mPhoto" />
+	</resultMap>
+	
+	<resultMap id="resultReviewInfo"
+		type="com.project.movie.domain.ReviewInfo">
+		<id property="midx" column="midx" />
+		<id property="idx" column="idx" />
+		<result property="rCont" column="rCont" />
+		<result property="rDate" column="rDate" />
+		
+	</resultMap>
+	
+	
+	<!-- 영화 정보 리스트 서비스  MovieList -->
+	<select id="MovieList"
+			resultMap="resultMovieInfo">
+		select * from project.movie
+	
+	</select>
+	<!-- 한줄평 리스트 서비스 ( 영화코드에 맟춰서 보여지도록)  ReviewList -->
+	<select id="ReviewList" 
+			resultMap="resultReviewInfo">
+		select * from project.review
+	</select>
+	
+	
+	<!-- 한줄평 추가 ReviewAdd --> 
+	
+	<insert id="ReviewAdd"
+		parameterType="com.project.movie.domain.ReviewInfo">
+		
+		insert into project.review(midx, idx, rCont, rDate) 
+		  values
+		(#{midx},#{idx},#{rCont},current_timestamp())
+		
+		
+	</insert>
+	<!-- 한줄평 삭제 ReviewDelete -->
+	
+	<delete id="ReviewDelete">
+		delete from project.review where idx=#{idx}
+	</delete>
+	
+	
+</mapper>
