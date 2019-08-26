@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.movie.domain.MovieInfo;
+import com.project.movie.domain.ReviewInfo;
 import com.project.movie.service.MovieInfoService;
 import com.project.movie.service.MovieListService;
+import com.project.movie.service.ReviewListService;
 
 @RestController // @ResponseBody 생략한다.
 @RequestMapping("/movie")
@@ -28,6 +30,8 @@ public class MovieRestController {
 	@Autowired
 	private MovieInfoService movieInfoService;
 	
+	@Autowired
+	private ReviewListService reviewListService;
 	
 	@GetMapping
 	@CrossOrigin
@@ -55,12 +59,14 @@ public class MovieRestController {
 			Model model
 			) {
 		MovieInfo movieInfo = movieInfoService.getMovieInfo(midx);
+		List<ReviewInfo> reviewList = reviewListService.getreviewList(midx);
 		
-		model.addAttribute("movieInfo", movieInfo);
 		System.out.println(movieInfo);
+		System.out.println(reviewList);
 		
 		return new ResponseEntity<MovieInfo>(movieInfo, HttpStatus.OK);
 	}
+	
 	
 	
 }

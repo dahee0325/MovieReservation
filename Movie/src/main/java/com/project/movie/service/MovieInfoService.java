@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.movie.dao.MovieDao;
 import com.project.movie.domain.MovieInfo;
+import com.project.movie.domain.ReviewInfo;
 
 @Service("movieInfoService")
 public class MovieInfoService {
@@ -24,6 +25,6 @@ public class MovieInfoService {
 		
 		return movie;
 	}
-		
+	
 	
 }
