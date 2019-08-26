@@ -4,6 +4,13 @@
 <!doctype html>
 <html>
 <%@ include file="/WEB-INF/views/frame/header.jsp"%>
+<style>
+	.wrap {
+		width: 30%;
+		display: inline-block;
+		vertical-align: top;
+	}
+</style>
 <body class="landing-page landing-page2">
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
 		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -12,7 +19,7 @@
     <div class="cover black" data-color="black"></div>
     <div class="container">
         <h2 class="logo cursive" style="font-size: 30px;">
-            	예매하기
+            	RESERVE
         </h2>
         <div class="content">
             <div class="subscribe">
@@ -66,7 +73,7 @@
 
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="cinemaList">\n';
-					html += '<a href="#">' + data[i].cidx + '</a> <br>\n';
+					html += '<a href="#" onclick="cinema('+data[i].cidx+')">' + data[i].cidx + '</a> <br>\n';
 					html += '</div>\n';
 				}
 
@@ -88,7 +95,7 @@
 
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="dateList">\n';
-					html += '<a href="#">' + data[i].cDate + '</a> <br>\n';
+					html += '<a href="#" onclick="date('+data[i].cDate+')">' + data[i].cDate + '</a> <br>\n';
 					html += '</div>\n';
 				}
 
@@ -110,7 +117,7 @@
 
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="movieList">\n';
-					html += '<a href="#">' + data[i].midx +":" + data[i].cTime +" ~ "+ data[i].totalTime + '</a> <br>\n';
+					html += '<a href="#" onclick="time_movie('+data[i].midx+')">' + data[i].midx + "(" + data[i].cTime +" ~ "+ data[i].totalTime +")"+ '</a> <br>\n';
 					html += '</div>\n';
 				}
 
