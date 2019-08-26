@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
+<mapper namespace="com.project.reserve.dao.ReserveDaoInterface">
+
+	<!-- 전체 리스트 -->
+	<select id="allList" parameterType="com.project.reserve.domain.ListData">
+		select * from movieticket;
+	</select>
+
+	<!-- 극장 리스트 -->
+	<select id="cinemaList" parameterType="com.project.reserve.domain.ListData">
+		select cidx from movieticket;
+	</select>
+	
+	<!-- 날짜 리스트 -->
+	<select id="cinemaList" parameterType="com.project.reserve.domain.ListData">
+		select cDate from movieticket;
+	</select>
+	
+	<!-- 영화/시간 리스트 -->
+	<select id="cinemaList" parameterType="com.project.reserve.domain.ListData">
+		select midx, time_format(cTime+runningTime,'%H : %i') 'totalTime' from movieticket;
+	</select>
+	
+	
+	
+</mapper>
+
+
+ 
+ 
