@@ -11,4 +11,8 @@ public class MoviesMainController {
 		return "main";
 	}
 	
+	@RequestMapping("/OK")
+	public String OK() {
+		return "movie/movie";
+	}
 }

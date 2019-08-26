@@ -15,5 +15,7 @@ public interface MovieDao {
 	public int ReviewAdd(String uId);
 	//4.  한줄평 삭제 ReviewDelete
 	public int ReviewDelete(String uId);
+	//5.  영화 상세 정보
+	public MovieInfo MovieInfo(int midx);
 	
 }

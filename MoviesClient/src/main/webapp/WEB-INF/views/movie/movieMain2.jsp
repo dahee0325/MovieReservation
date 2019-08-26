@@ -131,33 +131,6 @@
             </div>
         </div>
     </div>
-    
-   <!-- Button trigger modal -->
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">영화 상세 정보</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="mo" style="text-align: center; font-size: 20px; margin-bottom: 10px;">
-        
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">예매 하러 가기</button>
-      </div>
-    </div>
-  </div>
-</div> 
-    
-    
     <div class="footer">
       <div class="container">
              Made with <i class="fa fa-heart heart"></i> by <a href="https://github.com/dahee0325/MovieReservation">Movies Tim</a>.
@@ -204,18 +177,10 @@ $(document).ready(function(){
 			url : 'http://localhost:8080/movie/movie/' + midx,
 			type : 'GET',
 			success : function(data) {
-				 $('div.modal').modal();
-				 var html = '';
-				 html += '<div style="margin-bottom: 10px;">\n포스터 : ' + data.mPhoto	+ '</div>';
-					html += '<div style="margin-bottom: 10px;">\n';
-					html += '영화제목 : ' + data.mName + ' </div>';
-					html += '<div style="margin-bottom: 10px;">\n감독/배우 : ' + data.mPer + ' </div>';
-					html += '<div style="margin-bottom: 10px;">\n개봉일 : ' + data.mDate + '</div>';
-					html += '<div style="margin-bottom: 10px;">\n줄거리 : ' + data.mCont + ' </div>';
-					
-					$('#mo').html(html);	 
+				 if(data=='success'){
+					 
+                    }  
 			}
-			
 		});
 
 	}
