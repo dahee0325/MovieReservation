@@ -9,20 +9,18 @@ public class ListData {
 	private int midx;
 	private int cidx;
 	private Date cDate;
-	private Time cTime;
-	private Time runningTime;
-	private Time totalTime;
+	private String cTime;
+	private String totalTime;
 	
 	public ListData() {}
 	
-	public ListData(int tidx, int midx, int cidx, Date cDate, Time cTime, Time runningTime, Time totalTime) {
+	public ListData(int tidx, int midx, int cidx, Date cDate, String cTime, String totalTime) {
 		super();
 		this.tidx = tidx;
 		this.midx = midx;
 		this.cidx = cidx;
 		this.cDate = cDate;
 		this.cTime = cTime;
-		this.runningTime = runningTime;
 		this.totalTime = totalTime;
 	}
 	
@@ -50,24 +48,18 @@ public class ListData {
 	public void setcDate(Date cDate) {
 		this.cDate = cDate;
 	}
-	public Time getcTime() {
+	public String getcTime() {
 		return cTime;
 	}
-	public void setcTime(Time cTime) {
+	public void setcTime(String cTime) {
 		this.cTime = cTime;
 	}
-	public Time getRunningTime() {
-		return runningTime;
-	}
-	public void setRunningTime(Time runningTime) {
-		this.runningTime = runningTime;
-	}
 
-	public Time getTotalTime() {
+	public String getTotalTime() {
 		return totalTime;
 	}
 
-	public void setTotalTime(Time totalTime) {
+	public void setTotalTime(String totalTime) {
 		this.totalTime = totalTime;
 	}
 	

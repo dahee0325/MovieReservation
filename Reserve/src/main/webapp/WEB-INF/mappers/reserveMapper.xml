@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.reserve.dao.ReserveDaoInterface">
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultListData"
+		type="com.project.reserve.domain.ListData">
+		<id property="idx" column="idx" />
+		<result property="tidx" column="tidx" />
+		<result property="midx" column="midx" />
+		<result property="cidx" column="cidx" />
+		<result property="cDate" column="cDate" />
+		<result property="cTime" column="cTime" />
+		<result property="runningTime" column="runningTime" />
+		<result property="totalTime" column="totalTime" />
+	</resultMap>
+
+	<!-- 전체 리스트 -->
+	<select id="allList" resultMap="resultListData">
+		select * from movieticket
+	</select>
+
+	<!-- 극장 리스트 -->
+	<select id="cinemaList" resultMap="resultListData">
+		select cidx from movieticket
+	</select>
+	
+	<!-- 날짜 리스트 -->
+	<select id="dateList" resultMap="resultListData">
+		select cDate from movieticket
+	</select>
+	
+	<!-- 영화/시간 리스트 -->
+	<select id="movieList" resultMap="resultListData">
+		select midx, time_format(ctime,'%H : %i') 'cTime', time_format(cTime+runningTime,'%H : %i') 'totalTime' from movieticket
+	</select>
+	
+	
+</mapper>
+
+
+ 
+ 
