@@ -9,6 +9,19 @@
 		width: 30%;
 		display: inline-block;
 		vertical-align: top;
+		border: 1px solid #DDD;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+		
+	}
+	
+	a {
+		cursor: pointer;
+	}
+	
+	a:hover {
+		text-decoration: underline;
 	}
 </style>
 <body class="landing-page landing-page2">
@@ -19,7 +32,7 @@
     <div class="cover black" data-color="black"></div>
     <div class="container">
         <h2 class="logo cursive" style="font-size: 30px;">
-            	RESERVE
+            	reserve
         </h2>
         <div class="content">
             <div class="subscribe">
@@ -35,15 +48,18 @@
 							</div>
 							<div class="wrap">
 								<h3>영화/시간</h3>
-								<div id="movieList_wrap"></div>
+								<div id="movieList_wrap">
+									상영관과 날짜를 선택해주세요.
+								</div>
 							</div>
 						</div>
 						<div>
 							<form action="post" id="reserveform">
-								<input type="text" id="cinema"> <input type="text"
-									id="date"> <input type="text" id="time_movie">
-								<input type="text" id="seat"> <input type="button"
-									onclick="seatz()" value="좌석선택">
+								<input type="text" id="ticket">
+								<input type="text" id="cinema">
+								<input type="text" id="date">
+								<input type="text" id="time_movie">
+								<input type="text" id="seat"> <input type="button" onclick="seatz()" value="좌석선택">
 							</form>
 						</div>
 					</div>
@@ -52,110 +68,144 @@
     </div>
     <%@ include file="/WEB-INF/views/frame/footer.jsp"%>
  </div>
- <script>
+	<script>
 
-	$(document).ready(function(){
-        
-		cinemalist();
-		dateList();
-		movieList();
-		
-	});
-	
-	function cinemalist() {
+		$(document).ready(function() {
 
-		$.ajax({
-			url : 'http://localhost:8080/reserve/cinemaList',
-			type : 'GET',
-			success : function(data) {
-				
-				var html = '';
-
-				for (var i = 0; i < data.length; i++) {
-					html += '<div id="cinemaList">\n';
-					html += '<a href="#" onclick="cinema('+data[i].cidx+')">' + data[i].cidx + '</a> <br>\n';
-					html += '</div>\n';
-				}
-
-				$('#cinemaList_wrap').html(html);
-			}
+			cinemalist();
+			dateList();
 
 		});
 
-	}
-	
-	function dateList() {
+		function cinemalist() {
 
-		$.ajax({
-			url : 'http://localhost:8080/reserve/dateList',
-			type : 'GET',
-			success : function(data) {
-				
-				var html = '';
+			$.ajax({
+				url : 'http://localhost:8080/reserve/cinemaList',
+				type : 'GET',
+				success : function(data) {
 
-				for (var i = 0; i < data.length; i++) {
-					html += '<div id="dateList">\n';
-					html += '<a href="#" onclick="date('+data[i].cDate+')">' + data[i].cDate + '</a> <br>\n';
-					html += '</div>\n';
+					var html = '';
+
+					for (var i = 0; i < data.length; i++) {
+						html += '<div id="cinemaList">\n';
+						html += '<a onclick="cinemaClick(' + data[i].cidx+ ')">' + data[i].cidx + '</a> <br>\n';
+						html += '</div>\n';
+					}
+					
+					$('#cinemaList_wrap').html(html);
 				}
 
-				$('#dateList_wrap').html(html);
-			}
+			});
 
-		});
+		}
 
-	}
-	
-	function movieList() {
+		function dateList() {
 
-		$.ajax({
-			url : 'http://localhost:8080/reserve/movieList',
-			type : 'GET',
-			success : function(data) {
-				
-				var html = '';
+			$.ajax({
+				url : 'http://localhost:8080/reserve/dateList',
+				type : 'GET',
+				success : function(data) {
 
-				for (var i = 0; i < data.length; i++) {
-					html += '<div id="movieList">\n';
-					html += '<a href="#" onclick="time_movie('+data[i].midx+')">' + data[i].midx + "(" + data[i].cTime +" ~ "+ data[i].totalTime +")"+ '</a> <br>\n';
-					html += '</div>\n';
+					var html = '';
+
+					for (var i = 0; i < data.length; i++) {
+						html += '<div id="dateList">\n';
+						html += '<a onclick="dateClick(' + data[i].cDate+ ')">' + data[i].cDate + '</a> <br>\n';
+						html += '</div>\n';
+					}
+
+					$('#dateList_wrap').html(html);
 				}
 
-				$('#movieList_wrap').html(html);
-			}
+			});
+		}
 
-		});
 
-	}
-	
-	
-	function seat(sidx){
-		$('#seat').val(sidx);
-    }
-	
-	function seatz(){
-		$('#reserve_wrap').css('display', 'none');
-		$('#seat_warp').css('display', 'block'); 
-    }
-	
-	function cinema(cidx){
+		function cinemaClick(cidx) {
+
+			$('#cinema').val(cidx);
+			
+			$.ajax({
+				url : 'http://localhost:8080/reserve/bycinemaList/' + cidx,
+				type : 'GET',
+				contentType : 'application/json; charset=utf-8',
+				dataType : 'json',
+				success : function(data) {
+					var html = '';
+
+					for (var i = 0; i < data.length; i++) {
+						html += '<div id="dateList">\n';
+						html += '<a onclick="dateClick(' + data[i].cDate+ ')">' + data[i].cDate + '</a> <br>\n';
+						html += '</div>\n';
+					}
+					
+					$('#dateList_wrap').html(html);
+					
+				}
+			});
+
+		}
+
+		function dateClick(cDate) {
+			
+			$('#date').val(cDate);
+			
+			$.ajax({
+				url : 'http://localhost:8080/reserve/selectTimeList',
+				type : 'GET',
+				data : {
+					cidx : $('#cinema').val(),
+					cDate : $('#date').val()
+					},
+				success : function(data) {
+					var html = '';
+					
+					for (var i = 0; i < data.length; i++) {
+						html += '<div id="movieList">\n';
+						html += '<a onclick="time_movieClick(\''+ data[i].cTime +'\')">'
+								+ data[i].midx + "(" + data[i].cTime + " ~ "
+								+ data[i].totalTime + ")" + '</a> <br>\n';
+						html += '</div>\n';
+					}
+					
+					$('#movieList_wrap').html(html);
+					
+				}
+			});
+
+		}
+
+
+		function time_movieClick(timeidx) {
+			
+			$('#time_movie').val(timeidx);
+						
+		}
 		
-		$('#cinema').val(cidx);
-       
-    }
-	
-	function date(didx){
 		
-		$('#date').val(didx);
-       
-    }
-	
-	function time_movie(tidx){
+		function seatz() {
+			
+			$.ajax({
+				url : 'http://localhost:8080/reserve/getTicket',
+				type : 'GET',
+				data : {
+					cidx : $('#cinema').val(),
+					cDate : $('#date').val(),
+					cTime : $('#time_movie').val()
+					},
+				success : function(data) {
+					
+					$('#ticket').val(data);
+					
+				}
+			});
+
+			
+			
+			$('#reserve_wrap').css('display', 'none');
+			$('#seat_warp').css('display', 'block');
+		}
 		
-		$('#time_movie').val(tidx);
-       
-    }
-	
-</script>
+	</script>
 </body>
 </html>

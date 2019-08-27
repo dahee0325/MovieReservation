@@ -17,7 +17,7 @@
         <div class="content">
             <div class="subscribe">
                 <div class="motto">
-                    <img alt="noImg"src="images/movie1.jpg" height="500">
+                    <img alt="noImg" src="images/movie1.jpg" height="500">
                 </div>
             </div>
         </div>

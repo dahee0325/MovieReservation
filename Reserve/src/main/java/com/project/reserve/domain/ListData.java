@@ -1,20 +1,17 @@
 package com.project.reserve.domain;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class ListData {
 
 	private int tidx;
 	private int midx;
 	private int cidx;
-	private Date cDate;
+	private int cDate;
 	private String cTime;
 	private String totalTime;
 	
 	public ListData() {}
 	
-	public ListData(int tidx, int midx, int cidx, Date cDate, String cTime, String totalTime) {
+	public ListData(int tidx, int midx, int cidx, int cDate, String cTime, String totalTime) {
 		super();
 		this.tidx = tidx;
 		this.midx = midx;
@@ -42,10 +39,10 @@ public class ListData {
 	public void setCidx(int cidx) {
 		this.cidx = cidx;
 	}
-	public Date getcDate() {
+	public int getcDate() {
 		return cDate;
 	}
-	public void setcDate(Date cDate) {
+	public void setcDate(int cDate) {
 		this.cDate = cDate;
 	}
 	public String getcTime() {

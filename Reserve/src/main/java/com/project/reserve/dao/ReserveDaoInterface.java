@@ -1,6 +1,5 @@
 package com.project.reserve.dao;
 
-import java.sql.Time;
 import java.util.List;
 
 import com.project.reserve.domain.ListData;
@@ -15,6 +14,16 @@ public interface ReserveDaoInterface {
 	
 	//영화/시간 전체 리스트
 	public List<ListData> movieList();
+	
+	//극장 별 날짜 리스트
+	public List<ListData> byCinema(int cidx);
+	
+	//날짜 별 극장 리스트
+	public List<ListData> selectTimeList(int cidx, int cDate);
+	
+	//티켓번호
+	public int ticketNum(int cidx, int cDate, String cTime);
+	
 	
 	
 }
