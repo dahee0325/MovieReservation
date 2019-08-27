@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 극장 리스트 -->
 	<select id="cinemaList" resultMap="resultListData">
-		select DISTINCT cidx  from movieticket
+		select DISTINCT cidx  from movieticket order by cidx
 	</select>
 	
 	<!-- 날짜 리스트 -->
@@ -43,10 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by cTime
 	</select>
 	
-	<select id="ticketNum" resultMap="resultListData">
+	<select id="ticketNum" resultType="int">
 		select tidx from movieticket where cidx=#{param1} and cDate=#{param2} and cTime =#{param3}
 	</select>
 	
+	<select id="seatPrint" resultType="int">
+		select DISTINCT seatCnt from movieticket where cidx=#{cidx}
+	</select>
 	
 	
 </mapper>

@@ -61,4 +61,15 @@ public class ListViewService {
 		return num;
 		
 	}
+	
+	public int getSeatPrint(int cidx) {
+		
+		dao = template.getMapper(ReserveDaoInterface.class);
+		
+		int num = dao.seatPrint(cidx);
+		
+		return num;
+		
+	}
+	
 }

@@ -77,4 +77,13 @@ public class ListController {
 		return TicketNum;
 	}
 	
+	@CrossOrigin
+	@GetMapping("/seat/{tidx}")
+	public int getSeatPrint(@PathVariable("tidx") int tidx) {
+		
+		int TicketNum = listService.getSeatPrint(tidx);
+		
+		return TicketNum;
+	}
+	
 }

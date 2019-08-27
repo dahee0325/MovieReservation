@@ -23,6 +23,14 @@
 	a:hover {
 		text-decoration: underline;
 	}
+	
+	#seatCnt {
+		width: 100px;
+		height: 100px;
+		border: 1px solid #DDD;
+		margin: 10px;
+		display: inline-block;
+	}
 </style>
 <body class="landing-page landing-page2">
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
@@ -44,7 +52,9 @@
 							</div>
 							<div class="wrap">
 								<h3>날짜</h3>
-								<div id="dateList_wrap"></div>
+								<div id="dateList_wrap">
+									상영관을 선택해주세요.
+								</div>
 							</div>
 							<div class="wrap">
 								<h3>영화/시간</h3>
@@ -53,13 +63,17 @@
 								</div>
 							</div>
 						</div>
+						<div id="seat_warp" style="display: none; border: 1px solid white;">
+
+						</div>
 						<div>
 							<form action="post" id="reserveform">
 								<input type="text" id="ticket">
 								<input type="text" id="cinema">
 								<input type="text" id="date">
 								<input type="text" id="time_movie">
-								<input type="text" id="seat"> <input type="button" onclick="seatz()" value="좌석선택">
+								<input type="text" id="seat">
+								<a onclick="seat()">좌석선택</a>
 							</form>
 						</div>
 					</div>
@@ -73,7 +87,7 @@
 		$(document).ready(function() {
 
 			cinemalist();
-			dateList();
+			//dateList();
 
 		});
 
@@ -183,7 +197,18 @@
 		}
 		
 		
-		function seatz() {
+		function seat() {
+			
+			if($('#cinema').val()=='') {
+				alert('상영관을 선택해주세요.');
+		
+			}else if($('#date').val()=='') {
+				alert('날짜를 선택해주세요.');
+
+			}else if($('#time_movie').val()=='') {
+				alert('시간을 선택해주세요.');
+			}
+			
 			
 			$.ajax({
 				url : 'http://localhost:8080/reserve/getTicket',
@@ -196,15 +221,43 @@
 				success : function(data) {
 					
 					$('#ticket').val(data);
-					
-				}
-			});
+					$('#reserve_wrap').css('display', 'none');
 
-			
-			
-			$('#reserve_wrap').css('display', 'none');
-			$('#seat_warp').css('display', 'block');
+					$.ajax({
+						url : 'http://localhost:8080/reserve/seat/'+$('#cinema').val(),
+						type : 'GET',
+						contentType : 'application/json; charset=utf-8',
+						dataType : 'json',
+						success : function(data) {
+
+							var html = '';
+
+							for (var i = 1; i <= data; i++) {
+								
+									html += '<div id="seatCnt">\n';
+									html += '<a onclick="seatNum(' + i + ')">' + i + '</a> <br>\n';
+									html += '</div>\n';
+								
+								
+							}
+							
+							$('#seat_warp').html(html);
+							
+							$('#seat_warp').css('display', 'block');
+							
+						}
+					});
+				}
+			});			
 		}
+		
+		
+		function seatNum(seatNum) {
+			
+			$('#seat').val(seatNum);
+			
+		}
+		
 		
 	</script>
 </body>

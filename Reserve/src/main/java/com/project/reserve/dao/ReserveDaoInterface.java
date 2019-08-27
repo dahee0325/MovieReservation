@@ -24,6 +24,7 @@ public interface ReserveDaoInterface {
 	//티켓번호
 	public int ticketNum(int cidx, int cDate, String cTime);
 	
-	
+	//좌석개수
+	public int seatPrint(int cidx);
 	
 }
