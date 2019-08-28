@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.movie.dao.MovieDao;
 import com.project.movie.domain.MovieInfo;
+import com.project.movie.domain.RequestMovieWrite;
 
 @Service("movieListService")
 public class MovieListService {

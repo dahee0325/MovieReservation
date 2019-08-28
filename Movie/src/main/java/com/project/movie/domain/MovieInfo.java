@@ -7,7 +7,7 @@ public class MovieInfo {
 	private String mName; // 영화제목
 	private String mCont;  // 영화 줄거리
 	private String mPer; // 영화감독/ 배우
-	private Date mDate;  // 개봉날짜
+	private String mDate;  // 개봉날짜
 	private String mPhoto;  // 영화 포스터
 	
 	
@@ -23,10 +23,10 @@ public class MovieInfo {
 	public void setmPer(String mPer) {
 		this.mPer = mPer;
 	}
-	public Date getmDate() {
+	public String getmDate() {
 		return mDate;
 	}
-	public void setmDate(Date mDate) {
+	public void setmDate(String mDate) {
 		this.mDate = mDate;
 	}
 	public int getMidx() {

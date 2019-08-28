@@ -2,6 +2,8 @@ package com.project.movie.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +12,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.project.movie.domain.MovieInfo;
+import com.project.movie.domain.RequestMovieWrite;
 import com.project.movie.domain.ReviewInfo;
+import com.project.movie.service.MovieDeleteService;
 import com.project.movie.service.MovieInfoService;
 import com.project.movie.service.MovieListService;
+import com.project.movie.service.MovieWriteService;
 import com.project.movie.service.ReviewListService;
 
 @RestController // @ResponseBody 생략한다.
@@ -29,9 +36,11 @@ public class MovieRestController {
 	
 	@Autowired
 	private MovieInfoService movieInfoService;
+	@Autowired
+	private MovieWriteService movieWriteService;
 	
 	@Autowired
-	private ReviewListService reviewListService;
+	private MovieDeleteService movieDeleteService;
 	
 	@GetMapping
 	@CrossOrigin
@@ -52,6 +61,8 @@ public class MovieRestController {
 		return entity;
 	}
 	
+	
+	
 	@CrossOrigin
 	@GetMapping("/{midx}")  
 	public ResponseEntity<MovieInfo> getMovie(
@@ -59,14 +70,42 @@ public class MovieRestController {
 			Model model
 			) {
 		MovieInfo movieInfo = movieInfoService.getMovieInfo(midx);
-		List<ReviewInfo> reviewList = reviewListService.getreviewList(midx);
+		
 		
 		System.out.println(movieInfo);
-		System.out.println(reviewList);
+		
 		
 		return new ResponseEntity<MovieInfo>(movieInfo, HttpStatus.OK);
 	}
 	
 	
+	@CrossOrigin
+	@PostMapping
+	public ResponseEntity<String> write(
+			RequestMovieWrite regRequest,
+			MultipartHttpServletRequest request
+			) {
+		
+		System.out.println("2  "+ request.getFile("mPhoto").getOriginalFilename());
+		
+		return new ResponseEntity<String>(
+				movieWriteService.write(request, regRequest)>0? "success": "fail",
+				HttpStatus.OK
+				);
+		
+	}
+	
+	@CrossOrigin
+	@DeleteMapping("/{midx}")  // /rest/members/12
+	public ResponseEntity<String> MovieDelete(
+			@PathVariable("midx") int midx
+			) {
+		//int cnt = deleteService.memberDelete(idx);
+		
+		return new ResponseEntity<String>(
+				movieDeleteService.delete(midx)>0? "success": "fail",
+				HttpStatus.OK
+				);
+	}
 	
 }

@@ -133,76 +133,29 @@
 					
 				});
 		
-		$('#review').submit(function(){
-			$.ajax({
-				url : 'http://localhost:8080/movie/review',
-				type : 'POST',
-				data : $('#review').serialize(),
-				success : function(data) {
-					alert('한줄평이 입력되어버렷다구~삭제는 너가못한다구~');
-					movie($('#midx').val());
-				}
-			});
-			return false; 
-		});
+		
 		
 		function movie(midx) {
-
-			$.ajax({
-				url : 'http://localhost:8080/movie/movie/' + midx,
-				type : 'GET',
-				success : function(data) {
-					$('div.modal').modal();
-					var html = '';
-					html += '<img src="http://localhost:8080/movie/uploadfile/' + data.mPhoto+ '">';
-					html += '<div style="margin-bottom: 10px;">\n';
-					html += '영화제목 : ' + data.mName + ' </div>';
-					html += '<div style="margin-bottom: 10px;">\n감독/배우 : '
-							+ data.mPer + ' </div>';
-					html += '<div style="margin-bottom: 10px;">\n개봉일 : '
-							+ data.mDate + '</div>';
-					html += '<div style="margin-bottom: 10px;">\n줄거리 : '
-							+ data.mCont + ' </div>';
-
-					$('#mo').html(html);
-				}
-
-			});
-				
-			$.ajax({
-				url : 'http://localhost:8080/movie/review/' + midx,
-				type : 'GET',
-				success : function(data) {
-					var html = '';
-
-					for (var i = 0; i < data.length; i++) {
-						html += '<tr>';
-						html += '<td style="padding-right: 20px;">한줄평 : ' + data[i].rCont + ' </td>';
-						html += '<td>작성일 : ' + data[i].rDate + ' </td>';
-						html += '</tr>';
+			if(confirm('영화를삭제할꺼예요?')){
+				$.ajax({
+					url : 'http://localhost:8080/movie/movie/' + midx,
+					type : 'DELETE',
+					success : function(data) {
+						alert('영화삭제완료~');
+						location.reload();
 					}
 
-					$('#reviewList').html(html);
-
-				}
-			});
-			
-			$.ajax({
-				url : 'http://localhost:8080/movie/movie/' + midx,
-				type : 'GET',
-				success : function(data) {
-					var html = '';
-					html += '<tr>';
-					html += '<td><input type="hidden" id="midx" name="midx" value="'+ data.midx +'"></td>';
-					html += '<td><input type="hidden" id="mName" name="mName" value="'+ data.mName +'"></td>';
-					html += '<td>한줄평 <input type="text" id="rCont" name="rCont"></td>';
-					html += '<td><input type="submit" value="한줄평쓰기"></td>';
-					html += '</tr>';
+				});
+			}else{
+				return false;
 				
-				$('#reviewtable').html(html);
-				}
-			});
+			}
 			
+			
+				
+			
+			
+
 		}
 
 		(function(i, s, o, g, r, a, m) {

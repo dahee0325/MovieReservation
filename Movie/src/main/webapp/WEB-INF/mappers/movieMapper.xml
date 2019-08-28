@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap id="resultReviewInfo"
 		type="com.project.movie.domain.ReviewInfo">
 		<id property="midx" column="midx" />
-		<id property="idx" column="idx" />
+		<result property="mName" column="mName" />
 		<result property="rCont" column="rCont" />
 		<result property="rDate" column="rDate" />
 		
@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="MovieInfo"
 			resultMap="resultMovieInfo">
 		select * from project.movie where midx=#{midx}
+		
 	</select>
 	
 	<!-- 영화 정보 리스트 서비스  MovieList -->
@@ -42,18 +43,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 한줄평 리스트 서비스 ( 영화코드에 맟춰서 보여지도록)  ReviewList -->
 	<select id="ReviewList" 
 			resultMap="resultReviewInfo">
-		select * from project.review where midx=#{midx}
+			select midx,mName,rCont,date_format(rDate, '%Y-%m-%d') 'rDate' from project.review where midx = #{midx}
+		
 	</select>
 	
 	
 	<!-- 한줄평 추가 ReviewAdd --> 
 	
 	<insert id="ReviewAdd"
-		parameterType="com.project.movie.domain.ReviewInfo">
+		parameterType="com.project.movie.domain.Review">
 		
-		insert into project.review(midx, idx, rCont, rDate) 
+		insert into project.review(midx, mName, rCont) 
 		  values
-		(#{midx},#{idx},#{rCont},current_timestamp())
+		(#{midx},#{mName},#{rCont})
 		
 		
 	</insert>
@@ -63,5 +65,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from project.review where idx=#{idx}
 	</delete>
 	
+	<!-- 영화 추가 -->
+	<insert id="MovieWrite"
+			parameterType="com.project.movie.domain.MovieInfo">
+			
+			insert into project.movie (mName, mCont, mPer,mDate,mPhoto) 
+			values
+			(#{mName},#{mCont},#{mPer},#{mDate},#{mPhoto});
+	
+	</insert>
+	
+	<!-- 영화삭제 -->
+	<delete id="MovieDelete">
+		delete from project.movie where midx=#{midx}
+	</delete>
 	
 </mapper>

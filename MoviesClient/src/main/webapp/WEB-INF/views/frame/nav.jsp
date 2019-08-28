@@ -35,6 +35,16 @@
                     	상영관
                 </a>
             </li>
+            <li>
+                <a href="<c:url value="/write" />">
+                    	영화추가
+                </a>
+            </li>
+            <li>
+                <a href="<c:url value="/delete" />">
+                    	영화삭제
+                </a>
+            </li>
        </ul>
 
 		<ul class="nav navbar-nav navbar-right">

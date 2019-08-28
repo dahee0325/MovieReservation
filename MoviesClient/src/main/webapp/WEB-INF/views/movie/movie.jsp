@@ -9,8 +9,34 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <body>
-<c:forEach items="${movieInfo}" var="movieInfo">
-	${movieInfo.mName}
-</c:forEach>
+<div id="di">
+
+</div>
+<script>
+$(document).ready(
+				function() {
+
+					$.ajax({
+						url : 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=430156241533f1d058c603178cc3ca0e',
+						type : 'GET',
+						success : function(data) {
+							var html = '';
+							for(var i = 0; i < data.length; i++){
+								html += '<div>';
+								html += '영화제목 : '+ data.movieNm ;
+								html += '</div>';
+								
+							}
+							
+
+							$('#di').html(html);
+
+						}
+					});
+
+				});
+				
+</script>
+
 </body>
 </html>

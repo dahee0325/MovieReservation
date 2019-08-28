@@ -11,8 +11,14 @@ public class MoviesMainController {
 		return "main";
 	}
 	
-	@RequestMapping("/OK")
-	public String OK() {
-		return "movie/movie";
+	@RequestMapping("/write")
+	public String write() {
+		return "movie/movieWrite";
 	}
+	
+	@RequestMapping("/delete")
+	public String delete() {
+		return "movie/movieDelete";
+	}
+	
 }

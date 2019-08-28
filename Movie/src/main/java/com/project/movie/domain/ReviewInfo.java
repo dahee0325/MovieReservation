@@ -4,22 +4,20 @@ import java.util.Date;
 
 public class ReviewInfo {
 	private int midx;    // 영화 코드
-	private int idx;    // 회원 코드
+	private String mName; // 영화제목
 	private String rCont;  // 한줄평
-	private Date rDate;   // 작성일
-	
-	
+	private String rDate;   // 작성일
 	public int getMidx() {
 		return midx;
 	}
 	public void setMidx(int midx) {
 		this.midx = midx;
 	}
-	public int getIdx() {
-		return idx;
+	public String getmName() {
+		return mName;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 	public String getrCont() {
 		return rCont;
@@ -27,18 +25,16 @@ public class ReviewInfo {
 	public void setrCont(String rCont) {
 		this.rCont = rCont;
 	}
-	public Date getrDate() {
+	public String getrDate() {
 		return rDate;
 	}
-	public void setrDate(Date rDate) {
+	public void setrDate(String rDate) {
 		this.rDate = rDate;
 	}
-	
 	@Override
 	public String toString() {
-		return "ReviewInfo [midx=" + midx + ", idx=" + idx + ", rCont=" + rCont + ", rDate=" + rDate + "]";
+		return "ReviewInfo [midx=" + midx + ", mName=" + mName + ", rCont=" + rCont + ", rDate=" + rDate + "]";
 	}
-	
 	
 	
 	
