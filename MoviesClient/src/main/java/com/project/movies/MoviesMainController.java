@@ -21,4 +21,15 @@ public class MoviesMainController {
 		return "movie/movieDelete";
 	}
 	
+	@RequestMapping("/reviewDelete")
+	public String reviewdelete() {
+		return "movie/reviewDelete";
+	}
+	
+	@RequestMapping("/api")
+	public String api() {
+		return "movie/api";
+	}
+	
+	
 }

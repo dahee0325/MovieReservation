@@ -58,6 +58,9 @@
 						<div id="MovieList">
 
 						</div>
+						<div id="ol" style="font-size:50px;">
+									
+						</div>
 					</div>
 				</div>
 			</div>
@@ -128,6 +131,24 @@
 						}
 					});
 					
+					$.ajax({
+						url : 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=430156241533f1d058c603178cc3ca0e&targetDt=20190827',
+						type : 'GET',
+						success : function(data) {
+							var html = '';
+							
+							//console.log(data);
+							for (var i = 0; i < data.boxOfficeResult.dailyBoxOfficeList.length; i++) {
+								html += '<span>' + data.boxOfficeResult.dailyBoxOfficeList[i].movieNm + '</span>';
+								
+								$('#ol').html(html);
+							}
+							alert(data.boxOfficeResult.dailyBoxOfficeList[i].rank);
+							
+							
+
+						}
+					});
 					
 					
 					
@@ -160,7 +181,7 @@
 					html += '<div style="margin-bottom: 10px;">\n감독/배우 : '
 							+ data.mPer + ' </div>';
 					html += '<div style="margin-bottom: 10px;">\n개봉일 : '
-							+ data.mDate + '</div>';
+							+ data.mDate + '</div>';	
 					html += '<div style="margin-bottom: 10px;">\n줄거리 : '
 							+ data.mCont + ' </div>';
 

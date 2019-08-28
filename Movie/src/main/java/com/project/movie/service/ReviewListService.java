@@ -27,4 +27,15 @@ public class ReviewListService {
 			
 			return reviewList;
 		}
+		
+		public List<ReviewInfo> getreviewAllList(){
+			
+			dao = template.getMapper(MovieDao.class);
+			
+			List<ReviewInfo> reviewList = dao.ReviewAllList();
+			
+			
+			return reviewList;
+		}
+		
 }

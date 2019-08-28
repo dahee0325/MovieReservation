@@ -20,6 +20,18 @@
 	#review{
 		margin: 0 auto;
 	}
+	#reviewAllList{
+	margin: 0 auto;
+	text-align: center;
+	font-size: 20px;
+	
+	}
+	#reviewAllList>tr>td{
+		border: 1px solid #ddd;
+	}
+	
+	
+	
 	#reviewList{
 		margin: 0 auto;
 		text-align: center;
@@ -55,9 +67,9 @@
 			<div class="content">
 				<div class="subscribe">
 					<div class="motto">
-						<div id="MovieList">
+						<table id="ReviewAllList">
 
-						</div>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -83,6 +95,7 @@
 						<hr>
 			한줄평
 			<hr>
+			
 		</div>
 		<form id="review">
 		<table id="reviewtable">
@@ -110,20 +123,26 @@
 				function() {
 
 					$.ajax({
-						url : 'http://localhost:8080/movie/movie',
+						url : 'http://localhost:8080/movie/review',
 						type : 'GET',
 						success : function(data) {
 							var html = '';
 
 							for (var i = 0; i < data.length; i++) {
-								html += '<div class="movie">\n';
+								html += '<tr style="padding-right: 20px;">';
+								html += '<td style="padding-right: 30px;">영화제목</td>';
+								html += '<td style="padding-right: 30px;">'+ data[i].mName+'</td>';
+								html += '<td style="padding-right: 30px;">내용</td>';
+								html += '<td style="padding-right: 30px;">'+ data[i].rCont +'</td>';
+								html += '<td style="padding-right: 30px;"><input type="button" onclick="reviewd('+ data[i].midx +')" value="삭제하기"></td>';
+								html += '</tr>';
 								
-								html += '<img onclick="movie('+ data[i].midx + ')" src="http://localhost:8080/movie/uploadfile/' + data[i].mPhoto+ '"><br>';
-								html += '<span>' + data[i].mName + ' </span>';
-								html += '</div>\n';
+								
+								
+								$('#ReviewAllList').html(html);
 							}
 
-							$('#MovieList').html(html);
+							
 
 						}
 					});
@@ -134,14 +153,13 @@
 				});
 		
 		
-		
-		function movie(midx) {
-			if(confirm('영화를삭제할꺼예요?')){
+			function reviewd(midx) {
+			if(confirm('리뷰를 삭제할꺼예요?')){
 				$.ajax({
-					url : 'http://localhost:8080/movie/movie/' + midx,
+					url : 'http://localhost:8080/movie/review/' + midx,
 					type : 'DELETE',
 					success : function(data) {
-						alert('영화삭제완료~');
+						alert('리뷰삭제~');
 						location.reload();
 					}
 
@@ -150,23 +168,25 @@
 				return false;
 				
 			}
+			}
 		
-		}
+		
 
-		(function(i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r;
-			i[r] = i[r] || function() {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date();
-			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-			a.async = 1;
-			a.src = g;
-			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script',
-				'//www.google-analytics.com/analytics.js', 'ga');
+			(function(i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function() {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date();
+				a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m)
+			})(window, document, 'script',
+					'//www.google-analytics.com/analytics.js', 'ga');
 
-		ga('create', 'UA-46172202-1', 'auto');
-		ga('send', 'pageview');
+			ga('create', 'UA-46172202-1', 'auto');
+			ga('send', 'pageview');
+		
 	</script>
 </body>
 

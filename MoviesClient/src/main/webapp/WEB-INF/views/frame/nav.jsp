@@ -45,6 +45,12 @@
                     	영화삭제
                 </a>
             </li>
+            <li>
+                <a href="<c:url value="/reviewDelete" />">
+                    	한줄평삭제
+                </a>
+            </li>
+            
        </ul>
 
 		<ul class="nav navbar-nav navbar-right">
