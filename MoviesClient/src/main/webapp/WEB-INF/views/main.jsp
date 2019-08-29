@@ -5,7 +5,7 @@
 <html>
 <head>
 <%@include file="/WEB-INF/views/frame/header.jsp" %>
-<title>Insert title here</title>
+<title>MOVIES</title>
 </head>
 <body>
 <%@include file="/WEB-INF/views/frame/nav.jsp" %>
