@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.project.reserve.dao.ReserveDaoInterface;
 import com.project.reserve.domain.ListData;
+import com.project.reserve.domain.ReserveCheck;
+import com.project.reserve.domain.TicketData;
 
-@Service("listService")
-public class ListViewService {
+@Service("reserveService")
+public class ReserveService {
 
 	private ReserveDaoInterface dao;
 
@@ -44,32 +46,48 @@ public class ListViewService {
 		return list;
 	}
 	
-	public List<ListData> getSelectTimeList(int cidx, int cDate) {
+	public List<ListData> getSelectTimeList(int cidx, int tDate) {
 		dao =template.getMapper(ReserveDaoInterface.class);
 		
-		List<ListData> list = dao.selectTimeList(cidx, cDate);
+		List<ListData> list = dao.selectTimeList(cidx, tDate);
 		
 		return list;
 	}
 	
-	public int getTicketNum(int cidx, int cDate, String cTime) {
+	public int getTicketNum(int cidx, int tDate, String tTime) {
 		
 		dao =template.getMapper(ReserveDaoInterface.class);
 		
-		int num = dao.ticketNum(cidx, cDate, cTime);
+		int num = dao.ticketNum(cidx, tDate, tTime);
 		
 		return num;
 		
 	}
 	
-	public int getSeatPrint(int cidx) {
+	public ReserveCheck getSeatPrint(int cidx,int tidx) {
 		
 		dao = template.getMapper(ReserveDaoInterface.class);
 		
-		int num = dao.seatPrint(cidx);
+		ReserveCheck rc = new ReserveCheck();
+		rc.setTidx(tidx);
+		int sCnt = dao.seatCount(cidx);
+		rc.setSeatCnt(sCnt);
+		List<Integer> list = dao.seatResult(tidx);
+		rc.setSidx(list);
+		int sTotalCnt = dao.seatResultCount(tidx);
+		rc.setReserveTotalCnt(sTotalCnt);
+		
+		return rc;
+		
+	}
+	
+	public int reserve(int sidx, int tidx) {
+		
+		dao =template.getMapper(ReserveDaoInterface.class);
+		
+		int num = dao.reserve(sidx, tidx);
 		
 		return num;
-		
 	}
 	
 }

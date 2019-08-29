@@ -9,25 +9,24 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.reserve.domain.ListData;
-import com.project.reserve.service.ListViewService;
+import com.project.reserve.domain.ReserveCheck;
+import com.project.reserve.service.ReserveService;
 
 @RestController
-public class ListController {
+public class ReserveController {
 
 	@Autowired
-	private ListViewService listService;
+	private ReserveService reserveService;
 	
 	@CrossOrigin
 	@GetMapping("/cinemaList")
 	public ResponseEntity<List<ListData>> getCinemaList() {
 		
-		List<ListData> list = listService.getCinemaList();
+		List<ListData> list = reserveService.getCinemaList();
 		
 		ResponseEntity<List<ListData>> entity = new ResponseEntity<List<ListData>>(list, HttpStatus.OK);
 		
@@ -38,7 +37,7 @@ public class ListController {
 	@GetMapping("/dateList")
 	public ResponseEntity<List<ListData>> getDateList() {
 		
-		List<ListData> list = listService.getDatemaList();
+		List<ListData> list = reserveService.getDatemaList();
 		
 		ResponseEntity<List<ListData>> entity = new ResponseEntity<List<ListData>>(list, HttpStatus.OK);
 		
@@ -50,7 +49,7 @@ public class ListController {
 	@GetMapping("/bycinemaList/{cidx}")
 	public ResponseEntity<List<ListData>> getByCinemaList(@PathVariable("cidx") int cidx) {
 		
-		List<ListData> list = listService.getByCinemaList(cidx);
+		List<ListData> list = reserveService.getByCinemaList(cidx);
 		
 		ResponseEntity<List<ListData>> entity = new ResponseEntity<List<ListData>>(list, HttpStatus.OK);
 
@@ -60,9 +59,9 @@ public class ListController {
 	
 	@CrossOrigin
 	@GetMapping("/selectTimeList")
-	public ResponseEntity<List<ListData>> getSelectTimeList(@RequestParam("cidx") int cidx, @RequestParam("cDate") int cDate) {
+	public ResponseEntity<List<ListData>> getSelectTimeList(@RequestParam("cidx") int cidx, @RequestParam("tDate") int tDate) {
 		
-		List<ListData> list = listService.getSelectTimeList(cidx, cDate);
+		List<ListData> list = reserveService.getSelectTimeList(cidx, tDate);
 		ResponseEntity<List<ListData>> entity = new ResponseEntity<List<ListData>>(list, HttpStatus.OK);
 		
 		return entity;
@@ -70,20 +69,31 @@ public class ListController {
 	
 	@CrossOrigin
 	@GetMapping("/getTicket")
-	public int getTicketNum(@RequestParam("cidx") int cidx, @RequestParam("cDate") int cDate, @RequestParam("cTime") String cTime) {
+	public ResponseEntity<Integer> getTicketNum(@RequestParam("cidx") int cidx, @RequestParam("tDate") int tDate, @RequestParam("tTime") String tTime) {
 		
-		int TicketNum = listService.getTicketNum(cidx, cDate, cTime);
+		int TicketNum = reserveService.getTicketNum(cidx, tDate, tTime);
 		
-		return TicketNum;
+		return new ResponseEntity<Integer>(TicketNum, HttpStatus.OK);
 	}
 	
 	@CrossOrigin
-	@GetMapping("/seat/{tidx}")
-	public int getSeatPrint(@PathVariable("tidx") int tidx) {
+	@GetMapping("/seat")
+	public ResponseEntity<ReserveCheck> getSeatPrint(@RequestParam("cidx") int cidx, @RequestParam("tidx") int tidx) {
 		
-		int TicketNum = listService.getSeatPrint(tidx);
+		ReserveCheck rc = reserveService.getSeatPrint(cidx, tidx);
+		ResponseEntity<ReserveCheck> entity = new ResponseEntity<ReserveCheck>(rc, HttpStatus.OK);
 		
-		return TicketNum;
+		return entity;
+	}
+	
+	
+	@CrossOrigin
+	@PostMapping("/reserve")
+	public ResponseEntity<Integer> reserve(@RequestParam("sidx") int sidx, @RequestParam("tidx") int tidx) {
+
+		int reserveRsult = reserveService.reserve(sidx, tidx);
+		
+		return new ResponseEntity<Integer>(reserveRsult, HttpStatus.OK);
 	}
 	
 }

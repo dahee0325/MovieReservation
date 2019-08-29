@@ -14,4 +14,9 @@ public class ReserveController {
 		return "reserve/reserveMain";
 	}
 	
+	@GetMapping("/confirm")
+	public String getConfirm() {
+		
+		return "reserve/reserveConfirm";
+	}
 }
