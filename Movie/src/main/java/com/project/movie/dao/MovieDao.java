@@ -26,4 +26,10 @@ public interface MovieDao {
 	//7.  영화 삭제
 	public int MovieDelete(int midx);
 	
+	//8.  영화 수정
+	public int MovieEdit(MovieInfo movieInfo);
+	//9.  수정을위한 정보획득
+	public MovieInfo selectMovieMidx(int midx);
+	
+	
 }

@@ -42,7 +42,7 @@
             </li>
             <li>
                 <a href="<c:url value="/delete" />">
-                    	영화삭제
+                    	영화삭제/수정
                 </a>
             </li>
             <li>

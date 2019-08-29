@@ -1,20 +1,24 @@
 package com.project.movie.domain;
 
-import java.util.Date;
-
 import org.springframework.web.multipart.MultipartFile;
 
 
-public class RequestMovieWrite {
-	private int midx;
-	private String mName;
-	private String mCont;
-	private String mPer;
-	private String mDate;
-	private MultipartFile mPhoto;
-	private int mRunTime;
+public class RequestMovieEdit {
 	
+	private int midx;    // 영화 코드
+	private String mName; // 영화제목
+	private String mCont;  // 영화 줄거리
+	private String mPer; // 영화감독/ 배우
+	private String mDate;  // 개봉날짜
+	private MultipartFile mPhoto;  // 영화 포스터
+	private int mRunTime; // 상영시간
 	
+	public int getMidx() {
+		return midx;
+	}
+	public void setMidx(int midx) {
+		this.midx = midx;
+	}
 	public String getmName() {
 		return mName;
 	}
@@ -45,14 +49,6 @@ public class RequestMovieWrite {
 	public void setmPhoto(MultipartFile mPhoto) {
 		this.mPhoto = mPhoto;
 	}
-	
-	
-	public int getMidx() {
-		return midx;
-	}
-	public void setMidx(int midx) {
-		this.midx = midx;
-	}
 	public int getmRunTime() {
 		return mRunTime;
 	}
@@ -62,28 +58,29 @@ public class RequestMovieWrite {
 	
 	
 	
+	
+	
 	@Override
 	public String toString() {
-		return "RequestMovieWrite [midx=" + midx + ", mName=" + mName + ", mCont=" + mCont + ", mPer=" + mPer
+		return "RequestMovieEdit [midx=" + midx + ", mName=" + mName + ", mCont=" + mCont + ", mPer=" + mPer
 				+ ", mDate=" + mDate + ", mPhoto=" + mPhoto + ", mRunTime=" + mRunTime + "]";
 	}
-	
 	public MovieInfo toMovieInfo() {
+
 		MovieInfo info = new MovieInfo();
 		
+		info.setMidx(midx);
 		info.setmName(mName);
 		info.setmCont(mCont);
 		info.setmPer(mPer);
-		info.setMidx(midx);
 		info.setmRunTime(mRunTime);
-		String[] ar = mDate.split("-");
-		//info.setmDate(new Date (Integer.parseInt(ar[0]),Integer.parseInt(ar[1]),Integer.parseInt(ar[2])));
 		info.setmDate(mDate);
-		
-		return info;
-		
-	}
 	
+		
+
+		return info;
+
+	}
 	
 	
 	

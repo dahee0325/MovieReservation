@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +14,19 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.project.movie.domain.MovieInfo;
+import com.project.movie.domain.RequestMovieEdit;
 import com.project.movie.domain.RequestMovieWrite;
 import com.project.movie.domain.ReviewInfo;
 import com.project.movie.service.MovieDeleteService;
+import com.project.movie.service.MovieEditService;
 import com.project.movie.service.MovieInfoService;
 import com.project.movie.service.MovieListService;
 import com.project.movie.service.MovieWriteService;
@@ -41,6 +46,9 @@ public class MovieRestController {
 	
 	@Autowired
 	private MovieDeleteService movieDeleteService;
+	
+	@Autowired
+	private MovieEditService movieEditService;
 	
 	@GetMapping
 	@CrossOrigin
@@ -107,5 +115,34 @@ public class MovieRestController {
 				HttpStatus.OK
 				);
 	}
+	
+	
+	
+	
+	@CrossOrigin
+	@PostMapping("/{midx}")
+	public ResponseEntity<String> editMember(
+			/* @PathVariable("midx") int midx, */
+			RequestMovieEdit editRequest,
+			HttpServletRequest request
+			){
+		
+		/*
+		 * editRequest.setMidx(midx); System.out.println("1"+midx);
+		 */
+		System.out.println("20"+editRequest);
+		
+		int cnt = movieEditService.edit(editRequest, request);
+		
+		return new ResponseEntity<String>(cnt>0?"success":"fail" , HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

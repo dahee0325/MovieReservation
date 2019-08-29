@@ -41,6 +41,11 @@
 		font-weight: bold;
 		color: black;
 	}
+	input[type=text]{
+	height: 60px;
+		width: 300px;
+	}
+	
 </style>
 <body class="landing-page landing-page2">
 	<noscript>
@@ -69,7 +74,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">영화 상세 정보</h5>
+						<h5 class="modal-title" id="exampleModalLongTitle">영화 수정 하기</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -81,18 +86,14 @@
 						</div>
 						<div id="reviewListHeader">
 						<hr>
-			한줄평
+			<div id="oo">
+			
+			</div>
 			<hr>
 		</div>
-		<form id="review">
-		<table id="reviewtable">
-			
-			</table>
-		</form>
+		
 		<br><hr>
-		<table id="reviewList">
-			
-		</table>
+		
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
@@ -118,8 +119,10 @@
 							for (var i = 0; i < data.length; i++) {
 								html += '<div class="movie">\n';
 								
-								html += '<img onclick="movie('+ data[i].midx + ')" src="http://localhost:8080/movie/uploadfile/' + data[i].mPhoto+ '"><br>';
-								html += '<span>' + data[i].mName + ' </span>';
+								html += '<img src="http://localhost:8080/movie/uploadfile/' + data[i].mPhoto+ '"><br>';
+								html += '<span>' + data[i].mName + ' </span><br>';
+								html += '<span onclick="movie('+ data[i].midx + ')">★삭제</span>';
+								html += '<span onclick="edit('+ data[i].midx +')">☆수정</span>';
 								html += '</div>\n';
 							}
 
@@ -152,6 +155,95 @@
 			}
 		
 		}
+		
+		function edit(midx) {
+			if(confirm('선택한 영화를 수정할꺼예요?')){
+				
+				$.ajax({
+					url : 'http://localhost:8080/movie/movie/' + midx,
+					type : 'GET',
+					success : function(data) {
+						$('div.modal').modal();
+						var html = '';
+						html += '<form id="movieedit" enctype="multipart/form-data">';
+						html += '<table id="moviedeitt">';
+							
+						
+						html += '<tr>';
+						html += '<td><input type="hidden" id="midx" name="midx" value="'+data.midx+'"></td>';
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td>영화제목<input type="text" id="mName" name="mName" placeholder="'+data.mName+'" value="'+data.mName+'"></td>';
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td>줄거리<input type="text" id="mCont" name="mCont" value="'+data.mCont+'"></td>';
+						html += '</tr>'
+						html += '<tr>';
+						html += '<td>감독/배우<input type="text" id="mPer" name="mPer" placeholder="'+data.mPer+'" value="'+data.mPer+'"></td>';
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td>개봉일<input type="text" id="mDate" name="mDate" placeholder="yyyy-mm-dd" value="'+data.mDate+'"></td>';
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td>상영시간<input type="text" id="mRunTime" name="mRunTime" placeholder="'+data.mRunTime+'" value="'+data.mRunTime+'"></td>';
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td>포스터<input type="file" id="mPhoto" name="mPhoto"></td>';
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td><input type="button" onclick="bo()" value="영화수정"></td>';
+						html += '</tr>';
+						
+						html += '</table>'
+						html += '</form>';
+
+						$('#oo').html(html);
+					}
+				
+				});
+			}else{
+				return false;
+				
+			}
+			
+		}
+		
+		function bo(){
+			var formData = new FormData();
+	        /* formData.append("midx",$('#midx').val());  */
+	        formData.append("mRunTime",$('#mRunTime').val());
+			formData.append("mName",$('#mName').val());
+			formData.append("mCont",$('#mCont').val());
+			formData.append("mPer",$('#mPer').val());
+			formData.append("mDate",$('#mDate').val());
+			formData.append("mPhoto",$('#mPhoto')[0].files[0]); 
+			
+			
+		
+			
+			//alert(formData);
+			
+			$.ajax({
+				
+				url : 'http://localhost:8080/movie/movie/'+ $('#midx').val(),
+				type : 'POST',
+				data : formData,
+	            processData: false,
+	            contentType: false,
+				success : function(data) {
+					alert('수정완료~');
+					location.reload();
+				}
+			
+			});
+			
+		
+			
+			return false; 
+		}
+		
+		
+		
 
 		(function(i, s, o, g, r, a, m) {
 			i['GoogleAnalyticsObject'] = r;

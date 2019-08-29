@@ -85,4 +85,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from project.movie where midx=#{midx}
 	</delete>
 	
+	<!-- 수정을위한 정보획득 -->
+	<select id="selectMovieMidx"
+			resultMap="resultMovieInfo">
+		select * from project.movie
+		where midx=#{midx}
+	</select>
+	
+	<!-- 영화수정 -->
+	<update id="MovieEdit"
+			parameterType="com.project.movie.domain.MovieInfo">
+		update project.movie set mName=#{mName},mCont=#{mCont},mPer=#{mPer},mDate=#{mDate},mPhoto=#{mPhoto},mRunTime=#{mRunTime}
+		where midx=#{midx}
+	</update>
+	
 </mapper>
