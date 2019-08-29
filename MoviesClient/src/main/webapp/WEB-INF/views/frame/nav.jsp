@@ -8,15 +8,12 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">홈 <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="#">영화</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<c:url value="/reserve" />">예매</a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="<c:url value="/cinema" />">상영관</a>
       </li>
       <li class="nav-item">

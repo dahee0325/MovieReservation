@@ -87,9 +87,8 @@
           <button type="button" class="btn btn-primary btn-lg">예매하러 갈게요 :></button>
    <button type="button" class="btn btn-secondary btn-lg">다음에 올게요!</button>
    </div>
-      
-
-   
+<%@ include file="/WEB-INF/views/frame/footer.jsp"%>
+  
    <script>
    $(document).ready(function(){
       
