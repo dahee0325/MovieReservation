@@ -9,7 +9,7 @@ public class MovieInfo {
 	private String mPer; // 영화감독/ 배우
 	private String mDate;  // 개봉날짜
 	private String mPhoto;  // 영화 포스터
-	
+	private int mRunTime; // 상영시간
 	
 	public String getmName() {
 		return mName;
@@ -48,12 +48,19 @@ public class MovieInfo {
 	public void setmPhoto(String mPhoto) {
 		this.mPhoto = mPhoto;
 	}
-	
+	public int getmRunTime() {
+		return mRunTime;
+	}
+	public void setmRunTime(int mRunTime) {
+		this.mRunTime = mRunTime;
+	}
 	@Override
 	public String toString() {
 		return "MovieInfo [midx=" + midx + ", mName=" + mName + ", mCont=" + mCont + ", mPer=" + mPer + ", mDate="
-				+ mDate + ", mPhoto=" + mPhoto + "]";
+				+ mDate + ", mPhoto=" + mPhoto + ", mRunTime=" + mRunTime + "]";
 	}
+	
+	
 	
 	
 	

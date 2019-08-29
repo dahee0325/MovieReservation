@@ -130,9 +130,9 @@
 
 							for (var i = 0; i < data.length; i++) {
 								html += '<tr style="padding-right: 20px;">';
-								html += '<td style="padding-right: 30px;">영화제목</td>';
+								html += '<td style="padding-right: 30px;">영화제목 →</td>';
 								html += '<td style="padding-right: 30px;">'+ data[i].mName+'</td>';
-								html += '<td style="padding-right: 30px;">내용</td>';
+								html += '<td style="padding-right: 30px;">내용 →</td>';
 								html += '<td style="padding-right: 30px;">'+ data[i].rCont +'</td>';
 								html += '<td style="padding-right: 30px;"><input type="button" onclick="reviewd('+ data[i].midx +')" value="삭제하기"></td>';
 								html += '</tr>';

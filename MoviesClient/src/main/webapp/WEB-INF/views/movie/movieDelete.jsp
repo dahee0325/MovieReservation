@@ -51,7 +51,7 @@
 	<div class="main" style="background-image: url('images/main.png')">
 		<div class="cover black" data-color="black"></div>
 		<div class="container">
-			<h1 class="logo cursive">movies</h1>
+			<h1 class="logo cursive">영화를 삭제해보자~</h1>
 			<div class="content">
 				<div class="subscribe">
 					<div class="motto">
@@ -136,12 +136,12 @@
 		
 		
 		function movie(midx) {
-			if(confirm('영화를삭제할꺼예요?')){
+			if(confirm('선택한 영화를 삭제할꺼예요?')){
 				$.ajax({
 					url : 'http://localhost:8080/movie/movie/' + midx,
 					type : 'DELETE',
 					success : function(data) {
-						alert('영화삭제완료~');
+						alert('선택한 영화 삭제완료~^_★');
 						location.reload();
 					}
 

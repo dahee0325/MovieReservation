@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="mPer" column="mPer" />
 		<result property="mDate" column="mDate" />
 		<result property="mPhoto" column="mPhoto" />
+		<result property="mRunTime" column="mRunTime"/>
 	</resultMap>
 	
 	<resultMap id="resultReviewInfo"
@@ -73,9 +74,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="MovieWrite"
 			parameterType="com.project.movie.domain.MovieInfo">
 			
-			insert into project.movie (mName, mCont, mPer,mDate,mPhoto) 
+			insert into project.movie (midx,mName, mCont, mPer,mDate,mPhoto,mRunTime) 
 			values
-			(#{mName},#{mCont},#{mPer},#{mDate},#{mPhoto});
+			(#{midx},#{mName},#{mCont},#{mPer},#{mDate},#{mPhoto},#{mRunTime});
 	
 	</insert>
 	

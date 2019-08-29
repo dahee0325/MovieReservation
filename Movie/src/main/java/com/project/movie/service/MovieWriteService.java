@@ -43,7 +43,7 @@ public class MovieWriteService {
 			if(regist.getmPhoto()!= null) {
 				// 새로운 파일 이름 생성
 				//String newFileName = memberInfo.getuId()+System.nanoTime();				
-				newFileName = movieInfo.getmName()+"_"+regist.getmPhoto().getOriginalFilename();
+				newFileName = movieInfo.getMidx()+"_"+regist.getmPhoto().getOriginalFilename();
 				System.out.println(newFileName);
 				// 파일을 서버의 지정 경로에 저장
 				try {
