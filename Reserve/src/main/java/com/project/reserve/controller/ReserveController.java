@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.reserve.domain.CinemaData;
 import com.project.reserve.domain.ListData;
+import com.project.reserve.domain.MovieTimeData;
 import com.project.reserve.domain.ReserveCheck;
+import com.project.reserve.domain.ReserveData;
 import com.project.reserve.service.ReserveService;
 
 @RestController
@@ -24,11 +28,11 @@ public class ReserveController {
 	
 	@CrossOrigin
 	@GetMapping("/cinemaList")
-	public ResponseEntity<List<ListData>> getCinemaList() {
+	public ResponseEntity<List<CinemaData>> getCinemaList() {
 		
-		List<ListData> list = reserveService.getCinemaList();
+		List<CinemaData> list = reserveService.getCinemaList();
 		
-		ResponseEntity<List<ListData>> entity = new ResponseEntity<List<ListData>>(list, HttpStatus.OK);
+		ResponseEntity<List<CinemaData>> entity = new ResponseEntity<List<CinemaData>>(list, HttpStatus.OK);
 		
 		return entity;
 	}
@@ -59,10 +63,10 @@ public class ReserveController {
 	
 	@CrossOrigin
 	@GetMapping("/selectTimeList")
-	public ResponseEntity<List<ListData>> getSelectTimeList(@RequestParam("cidx") int cidx, @RequestParam("tDate") int tDate) {
+	public ResponseEntity<List<MovieTimeData>> getSelectTimeList(@RequestParam("cidx") int cidx, @RequestParam("tDate") int tDate) {
 		
-		List<ListData> list = reserveService.getSelectTimeList(cidx, tDate);
-		ResponseEntity<List<ListData>> entity = new ResponseEntity<List<ListData>>(list, HttpStatus.OK);
+		List<MovieTimeData> list = reserveService.getSelectTimeList(cidx, tDate);
+		ResponseEntity<List<MovieTimeData>> entity = new ResponseEntity<List<MovieTimeData>>(list, HttpStatus.OK);
 		
 		return entity;
 	}
@@ -95,5 +99,16 @@ public class ReserveController {
 		
 		return new ResponseEntity<Integer>(reserveRsult, HttpStatus.OK);
 	}
+	
+	@CrossOrigin
+	@GetMapping("/reserveInfo/{idx}")
+	public ResponseEntity<ReserveData> getReserveInfo(@PathVariable("idx") int idx) {
+		
+		ReserveData rd = reserveService.getReserveInfo(idx);
+		ResponseEntity<ReserveData> entity = new ResponseEntity<ReserveData>(rd, HttpStatus.OK);
+		
+		return entity;
+	}
+	
 	
 }

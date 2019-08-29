@@ -7,6 +7,15 @@
 <%@include file="/WEB-INF/views/frame/header.jsp" %>
 <title>Insert title here</title>
 <style>
+	#main_wrap {
+		width: 1200px;
+		margin: auto;
+	}
+	
+	a {
+		cursor: pointer;
+	}
+	
 	.wrap {
 		width: 30%;
 		display: inline-block;
@@ -15,16 +24,24 @@
 		border-radius: 10px;
 		padding: 10px;
 		margin: 10px;
+		height: 220px;
+		overflow: auto;
 		
 	}
 	
-	a {
+	#cinemaList_wrap a,#dateList_wrap a, #movieList_wrap a {
 		cursor: pointer;
+		width: 100%;
+		display: inline-block;
+		padding: 0 10px;
+		font-size: 20px;
+		
 	}
 	
-	a:hover {
-	
-		text-decoration: underline;
+	#cinemaList_wrap a:hover,#dateList_wrap a:hover, #movieList_wrap a:hover {
+		border: 1px solid #DDD;
+		border-radius: 5px;
+		font-weight: bold;
 	}
 	
 	#seatCnt {
@@ -49,19 +66,58 @@
 		background-color: white;
 	}
 
+	#backBtn, #reserveBtn {
+		display: none;
+		color: black;
+	}
+	
+	#reserveDiv, #noneReserveDiv {
+		text-align: center;
+		vertical-align: middle;
+		height: 100%;
+	}
+	
+	#reserveDiv{
+		background-color: #DDD;
+	}
+	
+	#form_warp {
+		
+		padding: 15px;
+		font-size: 20px;
+		
+	}
+
+	#backBtn, #seatBtn, #reserveBtn {
+		border: 1px solid #DDD;
+		width: 120px;
+		text-align: center;
+	}
+	
+	#backBtn:hover, #seatBtn:hover, #reserveBtn:hover {
+	
+		background-color: #DDD;
+		color: white;
+	
+	}
+	
+	#seatBtn {
+		display: inline-block;
+	}
+	
 </style>
 </head>
 <body>
 <%@include file="/WEB-INF/views/frame/nav.jsp" %>
-<h2 style="text-align: center;font-family: 'East Sea Dokdo', cursive;font-size:45px;">RESERVE</h2>
-	<div>
+<h2 style="text-align: center;font-family: 'East Sea Dokdo', cursive;font-size:45px;">예매</h2>
+	<div id="main_wrap">
 		<div id="reserve_wrap">
 			<div class="wrap">
 				<h3>상영관</h3>
 				<div id="cinemaList_wrap"></div>
 			</div>
 			<div class="wrap">
-				<h3>날짜</h3>
+				<h3>날짜 8월</h3>
 				<div id="dateList_wrap">상영관을 선택해주세요.</div>
 			</div>
 			<div class="wrap">
@@ -72,63 +128,44 @@
 		<div id="seat_warp" style="display: none; border: 1px solid white;">
 
 		</div>
-		<div>
+		<div id="form_warp">
 			<form action="post" id="reserveform">
-				<input type="hidden" id="ticket"> 상영관 : <input type="text"
-					id="cinema" disabled style="width: 5%;"> 날짜 : <input
-					type="text" id="date" disabled style="width: 3%;">일<br>
-				시간 : <input type="text" id="time_movie" disabled> 좌석번호 : <input
-					type="text" id="seat" disabled> <a onclick="back()">뒤로가기</a>
-				<a onclick="seat()" id="seat">좌석선택</a> <input type="submit"
-					value="예약하기">
+				<input type="hidden" id="ticket">
+				상영관 : <input type="hidden" id="cinema" disabled>
+				<input type="text" id="cinemaPrint" disabled style="width: 5%;">
+				날짜 : 8월 <input type="text" id="date" disabled style="width: 2%;">일  
+				<input type="text" id="time_movie" disabled> 
+				좌석번호 : <input type="text" id="seat" disabled>
+				<a id="backBtn" onclick="back()">뒤로가기</a>
+				<a id="seatBtn" onclick="seat()" >좌석선택</a>
+				<input id="reserveBtn" type="submit" value="예약하기">
 			</form>
 		</div>
 	</div>
 <%@ include file="/WEB-INF/views/frame/footer.jsp"%>
 <script>
-	$(document)
-			.ready(
-					function() {
+	
+		$(document).ready(function() {
+			cinemalist();
+			$('#reserveform').submit(function() {
+				if ($('#seat').val() == '') {
+					alert('좌석을 선택해주세요.');
+				}
+				$.ajax({
+					url : 'http://localhost:8080/reserve/reserve',
+					type : 'POST',
+					data : {sidx : $('#seat').val(),tidx : $('#ticket').val()},
+					success : function(data) {
+						if (data > 0) {
+							alert('예매되었습니다.\n예매확인창으로 이동합니다.');
+							location.href = 'http://localhost:8080/movies/reserve/confirm';
+						}
+					}
+				});
+				return false;
+			});
 
-						cinemalist();
-
-						$('#reserveform')
-								.submit(
-										function() {
-
-											if ($('#seat').val() == '') {
-												alert('좌석을 선택해주세요.');
-											}
-
-											$
-													.ajax({
-														url : 'http://localhost:8080/reserve/reserve',
-														type : 'POST',
-														data : {
-															sidx : $('#seat')
-																	.val(),
-															tidx : $('#ticket')
-																	.val()
-														},
-														success : function(data) {
-															if (data > 0) {
-																alert('예매되었습니다.\n예매확인창으로 이동합니다.');
-																location.href = 'http://localhost:8080/movies/reserve/confirm';
-															}
-														}
-													});
-
-											return false;
-										});
-
-						$(".ci").on("click", function() {
-
-							alert('gd');
-							//cinemaClick(this.html());
-
-						});
-
-					});
+		});
 
 	function cinemalist() {
 
@@ -142,9 +179,8 @@
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="cinemaList">\n';
 					html += '<div id="c_wrap">\n';
-					html += '<a id="c' + data[i].cidx
-							+ '" onclick="cinemaClick(' + data[i].cidx + ')">'
-							+ data[i].cidx + '</a>\n';
+					html += '<a id="c'+ data[i].cidx +'" onclick="cinemaClick(' + data[i].cidx + ')">'
+							+ data[i].cName + '</a>\n';
 					html += '</div>\n';
 					html += '</div>\n';
 				}
@@ -160,9 +196,9 @@
 	function cinemaClick(cidx) {
 
 		$('#cinema').val(cidx);
-
-		//$('#c'+cidx).parents('#c_wrap').addClass('cClick');
-		//$('#c'+cidx).parents('#c_wrap').siblings().removeClass('cClick');
+		$('#cinemaPrint').val($('#c'+cidx).html());
+		$('#date').val('');
+		$('#time_movie').val('');
 
 		$.ajax({
 			url : 'http://localhost:8080/reserve/bycinemaList/' + cidx,
@@ -187,8 +223,9 @@
 	}
 
 	function dateClick(cDate) {
-
+		
 		$('#date').val(cDate);
+		$('#time_movie').val('');
 
 		$.ajax({
 			url : 'http://localhost:8080/reserve/selectTimeList',
@@ -203,7 +240,7 @@
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="movieList">\n';
 					html += '<a onclick="time_movieClick(\'' + data[i].tTime
-							+ '\')">' + data[i].midx + "(" + data[i].tTime
+							+ '\')">' + data[i].mName + "(" + data[i].tTime
 							+ " ~ " + data[i].totalTime + ")" + '</a> <br>\n';
 					html += '</div>\n';
 				}
@@ -232,7 +269,7 @@
 		} else if ($('#time_movie').val() == '') {
 			alert('시간을 선택해주세요.');
 		}
-
+		
 		$.ajax({
 			url : 'http://localhost:8080/reserve/getTicket',
 			type : 'GET',
@@ -244,7 +281,6 @@
 			success : function(data) {
 
 				$('#ticket').val(data);
-				$('#reserve_wrap').css('display', 'none');
 
 				$.ajax({
 					url : 'http://localhost:8080/reserve/seat',
@@ -254,31 +290,51 @@
 						tidx : $('#ticket').val()
 					},
 					success : function(data) {
-						var html = '';
+						
+						if(data.seatCnt == data.reserveTotalCnt) {
+							
+							alert('모든 좌석이 매진되었습니다.\n다른 시간으로 예매해주세요.');
+							$('#seat_warp').css('display', 'none');
+							$('#backBtn').css('display', 'none');
+							$('#reserveBtn').css('display', 'none');
+							$('#seatBtn').css('display','inline-block');
+							$('#ticket').val('');
+							
+						}else {
+							$('#reserve_wrap').css('display', 'none');
+							
+							var html = '';
+							
+							for (var j = 1; j <= data.seatCnt; j++) {
 
-						for (var j = 1; j <= data.seatCnt; j++) {
+								html += '<div id="seatCnt">\n';
 
-							html += '<div id="seatCnt">\n';
+								var chk = true;
 
-							var chk = true;
-
-							for (i = 0; i < data.reserveTotalCnt; i++) {
-								if (data.sidx[i] == j) {
-									html += j + '<br>\n';
-									chk = false;
+								for (i = 0; i < data.reserveTotalCnt; i++) {
+									if (data.sidx[i] == j) {
+										html += '<div id="reserveDiv"><br>\n';
+										html += j + '<br>\n';
+										html += '</div>\n';
+										chk = false;
+									}
 								}
-							}
 
-							if (chk) {
-								html += '<a onclick="seatNum(' + j + ')">' + j
-										+ '</a> <br>\n';
-							}
+								if (chk) {
+									html += '<div id="noneReserveDiv"><br>\n';
+									html += '<a onclick="seatNum(' + j + ')">' + j + '</a> <br>\n';
+									html += '</div>\n';
+								}
 
-							html += '</div>\n';
+								html += '</div>\n';
 
-							$('#seat_warp').html(html);
+								$('#seat_warp').html(html);
 
-							$('#seat_warp').css('display', 'block');
+								$('#seat_warp').css('display', 'block');
+								$('#backBtn').css('display', 'inline-block');
+								$('#reserveBtn').css('display', 'inline-block');
+								$('#seatBtn').css('display', 'none');
+							}						
 						}
 
 					}
@@ -287,13 +343,16 @@
 			}
 		});
 	}
-
+	
 	function back() {
 
 		$('#seat_warp').css('display', 'none');
 		$('#reserve_wrap').css('display', 'block');
 		$('#seat').val('');
-
+		$('#backBtn').css('display', 'none');
+		$('#reserveBtn').css('display', 'none');
+		$('#seatBtn').css('display','inline-block');
+		
 	}
 
 	function seatNum(seatNum) {

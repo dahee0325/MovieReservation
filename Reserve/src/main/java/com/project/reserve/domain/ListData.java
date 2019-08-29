@@ -8,11 +8,11 @@ public class ListData {
 	private int tDate;
 	private String tTime;
 	private String totalTime;
-	
+	private int cSeatCnt;
 	
 	public ListData() {}
-		
-	public ListData(int tidx, int midx, int cidx, int tDate, String tTime, String totalTime) {
+
+	public ListData(int tidx, int midx, int cidx, int tDate, String tTime, String totalTime, int cSeatCnt) {
 		super();
 		this.tidx = tidx;
 		this.midx = midx;
@@ -20,6 +20,7 @@ public class ListData {
 		this.tDate = tDate;
 		this.tTime = tTime;
 		this.totalTime = totalTime;
+		this.cSeatCnt = cSeatCnt;
 	}
 
 	public int getTidx() {
@@ -70,6 +71,15 @@ public class ListData {
 		this.totalTime = totalTime;
 	}
 
+	public int getcSeatCnt() {
+		return cSeatCnt;
+	}
+
+	public void setcSeatCnt(int cSeatCnt) {
+		this.cSeatCnt = cSeatCnt;
+	}
+		
+	
 	
 	
 }

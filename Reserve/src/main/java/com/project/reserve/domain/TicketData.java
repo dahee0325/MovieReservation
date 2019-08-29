@@ -5,17 +5,15 @@ public class TicketData {
 	private int tidx;
 	private int idx;
 	private int sidx;
-	private String tDate;
-	
+
 	public TicketData() {}
 	
 	
-	public TicketData(int tidx, int idx, int sidx, String tDate) {
+	public TicketData(int tidx, int idx, int sidx) {
 		super();
 		this.tidx = tidx;
 		this.idx = idx;
 		this.sidx = sidx;
-		this.tDate = tDate;
 	}
 
 	public int getTidx() {
@@ -36,13 +34,5 @@ public class TicketData {
 	public void setSidx(int sidx) {
 		this.sidx = sidx;
 	}
-	public String gettDate() {
-		return tDate;
-	}
-	public void settDate(String tDate) {
-		this.tDate = tDate;
-	}
-	
-	
 	
 }

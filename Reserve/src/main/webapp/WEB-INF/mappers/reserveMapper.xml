@@ -26,9 +26,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="cSeatCnt" column="cSeatCnt" />
 	</resultMap>
 
+	<resultMap id="ReserveInfoData"
+		type="com.project.reserve.domain.ReserveData">
+		<result property="ridx" column="ridx" />
+		<result property="idx" column="idx" />
+		<result property="sidx" column="sidx" />
+		<result property="rDate" column="rDate" />
+		<result property="midx" column="midx" />
+		<result property="cidx" column="cidx" />
+		<result property="tDate" column="tDate" />
+		<result property="tTime" column="tTime" />
+		<result property="totalTime" column="totalTime" />
+	</resultMap>
+
 	<!-- 극장 리스트 -->
-	<select id="cinemaList" resultMap="resultListData">
-		select DISTINCT cidx  from movieticket order by cidx
+	<select id="cinemaList" resultType="com.project.reserve.domain.CinemaData">
+		select distinct cidx, cName from cinema c join movieticket m
+		using(cidx)
+		order by cidx
 	</select>
 	
 	<!-- 극장별 날짜 리스트 -->
@@ -39,10 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 날짜, 영화별 날짜 리스트 -->
-	<select id="selectTimeList" resultMap="resultListData">
-		select midx, time_format(tTime,'%H:%i') 'tTime', time_format(DATE_ADD(tTime, INTERVAL mRunTime MINUTE), '%H:%i') 'totalTime'
-		from movieticket where cidx=#{param1} and tDate=#{param2}
-		order by tTime;
+	<select id="selectTimeList" resultType="com.project.reserve.domain.MovieTimeData">
+		select distinct midx, mName, time_format(tTime,'%H:%i') 'tTime', time_format(DATE_ADD(tTime, INTERVAL m.mRunTime MINUTE), '%H:%i') 'totalTime'
+		from movie m join movieticket mt
+		using(midx)
+		where cidx=#{param1} and tDate=#{param2}
 	</select>
 	
 	<!-- 티켓번호 -->
@@ -74,6 +90,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into reserve (idx, sidx, tidx) values (1 ,#{param1}, #{param2})
 	</insert>
 	
+	<!-- 예약정보 리스트 -->
+	<select id="reserveInfo" resultMap="ReserveInfoData" >
+		select r.ridx, r.idx, r.sidx, r.rDate, m.midx, m.cidx,m.tDate,time_format(tTime,'%H:%i') 'tTime',time_format(DATE_ADD(tTime, INTERVAL mRunTime MINUTE), '%H:%i') 'totalTime'
+		from reserve r join movieticket m
+		using(tidx)
+		where idx=#{idx}
+	</select>
+
 </mapper>
 
 

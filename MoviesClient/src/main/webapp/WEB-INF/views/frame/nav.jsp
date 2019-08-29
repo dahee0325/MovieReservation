@@ -19,6 +19,9 @@
       <li class="nav-item">
         <a class="nav-link" href="<c:url value="/cinema/write" />">등록</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/manager/reserve" />">티켓등록</a>
+      </li>
     </ul>
   </div>
 </nav>

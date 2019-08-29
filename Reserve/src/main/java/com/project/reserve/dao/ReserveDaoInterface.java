@@ -2,13 +2,15 @@ package com.project.reserve.dao;
 
 import java.util.List;
 
+import com.project.reserve.domain.CinemaData;
 import com.project.reserve.domain.ListData;
-import com.project.reserve.domain.TicketData;
+import com.project.reserve.domain.MovieTimeData;
+import com.project.reserve.domain.ReserveData;
 
 public interface ReserveDaoInterface {
 
 	//극장 전체 리스트
-	public List<ListData> cinemaList();
+	public List<CinemaData> cinemaList();
 	
 	//날짜 전체 리스트
 	public List<ListData> dateList();
@@ -20,7 +22,7 @@ public interface ReserveDaoInterface {
 	public List<ListData> byCinema(int cidx);
 	
 	//날짜 별 극장 리스트
-	public List<ListData> selectTimeList(int cidx, int tDate);
+	public List<MovieTimeData> selectTimeList(int cidx, int tDate);
 	
 	//티켓번호
 	public int ticketNum(int cidx, int tDate, String tTime);
@@ -36,4 +38,8 @@ public interface ReserveDaoInterface {
 	
 	//예약하기
 	public int reserve(int cidx, int tidx);
+	
+	//예약정보가져오기
+	public ReserveData reserveInfo(int idx);
+	
 }

@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.reserve.dao.ReserveDaoInterface;
+import com.project.reserve.domain.CinemaData;
 import com.project.reserve.domain.ListData;
+import com.project.reserve.domain.MovieTimeData;
 import com.project.reserve.domain.ReserveCheck;
-import com.project.reserve.domain.TicketData;
+import com.project.reserve.domain.ReserveData;
 
 @Service("reserveService")
 public class ReserveService {
@@ -19,11 +21,11 @@ public class ReserveService {
 	@Autowired
 	private SqlSessionTemplate template;
 	
-	public List<ListData> getCinemaList() {
+	public List<CinemaData> getCinemaList() {
 
 		dao = template.getMapper(ReserveDaoInterface.class);
 
-		List<ListData> list = dao.cinemaList();
+		List<CinemaData> list = dao.cinemaList();
 
 		return list;
 	}
@@ -46,10 +48,10 @@ public class ReserveService {
 		return list;
 	}
 	
-	public List<ListData> getSelectTimeList(int cidx, int tDate) {
+	public List<MovieTimeData> getSelectTimeList(int cidx, int tDate) {
 		dao =template.getMapper(ReserveDaoInterface.class);
 		
-		List<ListData> list = dao.selectTimeList(cidx, tDate);
+		List<MovieTimeData> list = dao.selectTimeList(cidx, tDate);
 		
 		return list;
 	}
@@ -88,6 +90,18 @@ public class ReserveService {
 		int num = dao.reserve(sidx, tidx);
 		
 		return num;
+	}
+	
+	public ReserveData getReserveInfo(int idx) {
+		
+		dao = template.getMapper(ReserveDaoInterface.class);
+		
+		ReserveData rc = new ReserveData();
+		
+		rc = dao.reserveInfo(idx);
+		
+		return rc;
+		
 	}
 	
 }
