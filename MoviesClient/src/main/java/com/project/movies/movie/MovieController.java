@@ -1,21 +1,23 @@
-package com.project.movies.reserve;
+package com.project.movies.movie;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class ReserveController {
-
-	@GetMapping("/reserve")
+@CrossOrigin
+@RequestMapping("/movie")
+public class MovieController {
+	
+	@GetMapping
 	public String getMain() {
 		
-		return "reserve/reserveMain";
+		return "movie/movieMain";
 	}
 	
-	@GetMapping("/confirm")
-	public String getConfirm() {
-		
-		return "reserve/reserveConfirm";
-	}
+
 }
+
+
+

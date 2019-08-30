@@ -47,7 +47,7 @@
    </div>
    
 <div id="form_wrap">
-   <form>
+   <form id="ticketForm">
       <div class="form-group">
          <label for="cidx">극장을 선택하세요.</label>
          <select id="cidx" name="cidx" class="custom-select custom-select-lg mb-3">
@@ -61,25 +61,24 @@
 		</select>
       </div>
       <div class="form-group">
-         <label for="tDate">상영할 날짜를 입력하세요.</label>
-         <input type="text" class="form-control" id="tDate" placeholder="숫자만 입력해주세요. ex) 1" name="tDate">
+         <label for="tDate">상영할 일자를 입력하세요. (최근 일주일 내)</label>
+         <input type="text" class="form-control" id="tDate" placeholder="숫자만 입력해주세요. ex) 1" name="tDate" maxlength="2">
       </div>
       <div class="form-group">
          <label for="tTime">상영시작할 시간을 입력하세요.</label> <input
-            type="text" class="form-control" id="tTime" placeholder="초를 빼고 입력해주세요. ex)11:00" name="tTime">
-      </div>
-      <div class="form-group">
-         <label for="mRunTime">러닝타임</label>
-         <input type="text" class="form-control" id="mRunTime" name="mRunTime">
+            type="text" class="form-control" id="tTime" placeholder="초를 빼고 입력해주세요. ex)11:00" name="tTime" maxlength="5">
       </div>
       <div class="form-group">
          <label for="cSeatCnt">좌석개수</label>
-         <input type="text" class="form-control" id="cSeatCnt" name="cSeatCnt">
+         <input type="text" class="form-control" id="cSeatCnt" name="cSeatCnt" placeholder="단위 : 개">
       </div>
-      <a id="button" class="btn btn-secondary" href='<c:url value="/" />' role="button">홈으로</a>
+      <div class="form-group">
+         <label for="mRunTime">러닝타임</label>
+         <input type="text" class="form-control" id="mRunTime" name="mRunTime" placeholder="단위 : 분">
+      </div>
       <div style="text-align: right;">
-         <button type="submit" class="btn btn-primary mb-2">등록하기</button>
-         <button class="btn btn-primary mb-2">취소하기</button>
+         <button style="margin-top: 9px;" type="submit" class="btn btn-primary mb-2">등록하기</button>
+         <a id="button" class="btn btn-secondary" href='<c:url value="/" />' role="button">홈으로</a>
       </div>
    </form>
 </div>
@@ -88,6 +87,37 @@
     	  
     	  cinemaList();
     	  movieList();
+    	  
+    	  $('#cidx').change(function () {
+
+			$.ajax({
+	  			url : 'http://localhost:8080/reserve/manager/cinemaList/'+$(this).val(),
+	  			type : 'GET',
+	  			contentType : 'application/json; charset=utf-8',
+	  			dataType : 'json',
+	  			success : function(data) {
+	  				
+	  				$('#cSeatCnt').val(data);
+	  				
+	  				}
+	  			});
+			});
+    	  
+    	  $('#midx').change(function () {
+
+  			$.ajax({
+  	  			url : 'http://localhost:8080/reserve/manager/movieList/'+$(this).val(),
+  	  			type : 'GET',
+  	  			contentType : 'application/json; charset=utf-8',
+  	  			dataType : 'json',
+  	  			success : function(data) {
+  	  				
+  	  				$('#mRunTime').val(data);
+  	  				
+  	  				}
+  	  			});
+  			});
+    	  
          
       });
       
@@ -134,6 +164,29 @@
   		});
     	  
       }
+	
+	
+	$('#ticketForm').submit(function() {
+		
+		if ($('#tDate').val() == '') {
+			alert('상영날짜를 선택해주세요.');
+		}else if($('#tTime').val() == ''){
+			alert('상영시간을 선택해주세요.');
+		}
+		
+		$.ajax({
+			url : 'http://localhost:8080/reserve/manager/movies',
+			type : 'POST',
+			data : $('#ticketForm').serialize(),
+			success : function(data) {
+				if (data > 0) {
+					alert('등록되었습니다.');
+					location.reload();
+				}
+			}
+		});
+		return false;
+	});
    </script>
 
 

@@ -83,25 +83,29 @@ public class ReserveService {
 		
 	}
 	
-	public int reserve(int sidx, int tidx) {
+	public int reserve(int idx, int sidx, int tidx) {
+		
+		dao =template.getMapper(ReserveDaoInterface.class);
+
+		return dao.reserve(idx, sidx, tidx);
+	}
+	
+	public List<ReserveData> getReserveInfo(int idx) {
 		
 		dao =template.getMapper(ReserveDaoInterface.class);
 		
-		int num = dao.reserve(sidx, tidx);
+		List<ReserveData> list = dao.reserveInfo(idx);
 		
-		return num;
+		return list;
+				
 	}
 	
-	public ReserveData getReserveInfo(int idx) {
+	public int reserveDel(int ridx) {
 		
-		dao = template.getMapper(ReserveDaoInterface.class);
-		
-		ReserveData rc = new ReserveData();
-		
-		rc = dao.reserveInfo(idx);
-		
-		return rc;
-		
+		dao =template.getMapper(ReserveDaoInterface.class);
+
+		return dao.reserveDel(ridx);
 	}
+	
 	
 }

@@ -87,17 +87,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 예매 -->
 	<insert id="reserve" parameterType="com.project.reserve.domain.TicketData">
-		insert into reserve (idx, sidx, tidx) values (1 ,#{param1}, #{param2})
+		insert into reserve (idx, sidx, tidx) values (#{param1} ,#{param2}, #{param3})
 	</insert>
 	
-	<!-- 예약정보 리스트 -->
-	<select id="reserveInfo" resultMap="ReserveInfoData" >
+	<!-- 예매정보 리스트 -->
+	<select id="reserveInfo" resultMap="ReserveInfoData">
 		select r.ridx, r.idx, r.sidx, r.rDate, m.midx, m.cidx,m.tDate,time_format(tTime,'%H:%i') 'tTime',time_format(DATE_ADD(tTime, INTERVAL mRunTime MINUTE), '%H:%i') 'totalTime'
 		from reserve r join movieticket m
 		using(tidx)
 		where idx=#{idx}
 	</select>
 
+	<!-- 예매취소 -->
+	<delete id="reserveDel">
+		delete from reserve where ridx=#{ridx}
+	</delete>
 </mapper>
 
 

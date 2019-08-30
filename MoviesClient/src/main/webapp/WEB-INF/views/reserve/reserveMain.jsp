@@ -130,6 +130,7 @@
 		</div>
 		<div id="form_warp">
 			<form action="post" id="reserveform">
+				<input type="text" id="idx" placeholder="id">
 				<input type="hidden" id="ticket">
 				상영관 : <input type="hidden" id="cinema" disabled>
 				<input type="text" id="cinemaPrint" disabled style="width: 5%;">
@@ -146,19 +147,22 @@
 <script>
 	
 		$(document).ready(function() {
+			//var data = JSON.parse(sessionStorage.getItem("loginInfo"));
+			//$('#idx').val(data.idx);
+			
 			cinemalist();
 			$('#reserveform').submit(function() {
 				if ($('#seat').val() == '') {
 					alert('좌석을 선택해주세요.');
 				}
 				$.ajax({
-					url : 'http://localhost:8080/reserve/reserve',
+					url : 'http://13.209.47.16:8080/reserve/reserve',
 					type : 'POST',
-					data : {sidx : $('#seat').val(),tidx : $('#ticket').val()},
+					data : {idx : $('#idx').val(), sidx : $('#seat').val(), tidx : $('#ticket').val()},
 					success : function(data) {
 						if (data > 0) {
-							alert('예매되었습니다.\n예매확인창으로 이동합니다.');
-							location.href = 'http://localhost:8080/movies/reserve/confirm';
+							alert('예매되었습니다.\n메인페이지로 이동합니다.');
+							location.href = 'http://localhost:8080/movies'
 						}
 					}
 				});
@@ -170,7 +174,7 @@
 	function cinemalist() {
 
 		$.ajax({
-			url : 'http://localhost:8080/reserve/cinemaList',
+			url : 'http://13.209.47.16:8080/reserve/cinemaList',
 			type : 'GET',
 			success : function(data) {
 
@@ -201,7 +205,7 @@
 		$('#time_movie').val('');
 
 		$.ajax({
-			url : 'http://localhost:8080/reserve/bycinemaList/' + cidx,
+			url : 'http://13.209.47.16:8080/reserve/bycinemaList/' + cidx,
 			type : 'GET',
 			contentType : 'application/json; charset=utf-8',
 			dataType : 'json',
@@ -228,7 +232,7 @@
 		$('#time_movie').val('');
 
 		$.ajax({
-			url : 'http://localhost:8080/reserve/selectTimeList',
+			url : 'http://13.209.47.16:8080/reserve/selectTimeList',
 			type : 'GET',
 			data : {
 				cidx : $('#cinema').val(),
@@ -268,10 +272,18 @@
 
 		} else if ($('#time_movie').val() == '') {
 			alert('시간을 선택해주세요.');
+		} else if($('#idx').val() == '') {
+			alert('로그인을 해주세요.\n로그인페이지로 이동합니다.');
+			//로그인페이지로 이동
+			//location.href = 'http://localhost:8080/movies/confirm';
+			
+			//var data = JSON.parse(sessionStorage.getItem("loginInfo"));
+			//$('#idx').val(data.idx);
 		}
 		
+		
 		$.ajax({
-			url : 'http://localhost:8080/reserve/getTicket',
+			url : 'http://13.209.47.16:8080/reserve/getTicket',
 			type : 'GET',
 			data : {
 				cidx : $('#cinema').val(),
@@ -283,7 +295,7 @@
 				$('#ticket').val(data);
 
 				$.ajax({
-					url : 'http://localhost:8080/reserve/seat',
+					url : 'http://13.209.47.16:8080/reserve/seat',
 					type : 'GET',
 					data : {
 						cidx : $('#cinema').val(),

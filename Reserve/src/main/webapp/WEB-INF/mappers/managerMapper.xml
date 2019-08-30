@@ -7,14 +7,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.project.reserve.manager.dao.ManagerDaoInterface">
 
 	<!-- 영화 정보 리스트 -->
-	<select id="movieList" resultType="com.project.reserve.manager.domain.MovieData">
-		select midx,mName,mRunTime from movie
+	<select id="movieList" resultType="com.project.reserve.manager.domain.ManagerMovieData">
+		select midx,mName from movie
 	</select>
 	
 	<!-- 극장 정보 리스트 -->
 	<select id="cinemaList" resultType="com.project.reserve.manager.domain.ManagerCinemaData">
-		select cidx,cName,cSeatCnt from cinema
+		select cidx,cName from cinema
 	</select>
+	
+	<!-- 극장에 따른 좌석개수 -->
+	<select id="seatCnt" resultType="int">
+		select cSeatCnt from cinema where cidx=#{cidx}
+	</select>
+	
+	<!-- 영화에 따른 러닝타임 -->
+	<select id="runTime" resultType="int">
+		select mRunTime from movie where midx=#{midx}
+	</select>
+	
+	<insert id="insertMovie" parameterType="com.project.reserve.manager.domain.ManagerShowMovieData">
+		insert movieticket (midx, cidx, tDate, tTime, mRunTime, cSeatCnt) values (#{midx}, #{cidx}, #{tDate}, #{tTime}, #{mRunTime}, #{cSeatCnt})
+	</insert>
 	
 </mapper>
 

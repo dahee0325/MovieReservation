@@ -11,6 +11,7 @@
 <%@include file="/WEB-INF/views/frame/nav.jsp" %>
 <h2 style="text-align: center;font-family: 'East Sea Dokdo', cursive;font-size:45px;">CINEMA</h2>
    <h2><img src="http://img.cgv.co.kr/R2014/images/title/h2_theater.png" alt="THEATER" /></h2>
+   
    <div class="card-deck">
      <div class="card">
        <img src="images/gangnam.png" class="card-img-top" alt="...">
@@ -44,7 +45,14 @@
      </div>
    </div>
    
-   
+
+   <br><br>
+   <h4 style="margin-left:10px">자주가는 극장을 선택하세요!</h4>
+   <div id="theaterselect">
+   <!-- <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_1();">MOVIES 강남점</a> |
+   <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_1();">MOVIES 목동점</a> |
+   <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_1();">MOVIES 구로점</a> | -->
+   </div>
 
    <br><br>
    <h4 style="margin-left:10px">언제 영화를 보시나요?</h4>
@@ -56,13 +64,7 @@
    <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_2();">31</a> |  -->
    </div>
    
-   <br><br>
-   <h4 style="margin-left:10px">자주가는 극장을 선택하세요!</h4>
-   <div id="theaterselect">
-   <!-- <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_1();">MOVIES 강남점</a> |
-   <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_1();">MOVIES 목동점</a> |
-   <a id="button" class="btn btn-Dark" href="" role="button" onclick="button_1();">MOVIES 구로점</a> | -->
-   </div>
+
    
 
    
@@ -84,16 +86,17 @@
     
     </table>      
           <div style="text-align:center;">
-          <button type="button" class="btn btn-primary btn-lg">예매하러 갈게요 :></button>
+          <button onclick="re()" type="button" class="btn btn-primary btn-lg">예매하러 갈게요 :></button>
    <button type="button" class="btn btn-secondary btn-lg">다음에 올게요!</button>
    </div>
-<%@ include file="/WEB-INF/views/frame/footer.jsp"%>
-  
+      
+
+   
    <script>
    $(document).ready(function(){
       
       $.ajax({
-         url : 'http://localhost:8080/project/cinema' ,
+         url : 'http://54.180.145.4:8080/project/cinema' ,
          type : 'GET',
          success : function(data) {
             var html = '';
@@ -107,7 +110,7 @@
       
       
       $.ajax({
-         url : 'http://localhost:8080/project/cinema' ,
+         url : 'http://54.180.145.4:8080/project/cinema' ,
          type : 'GET',
          success : function(data) {
             var html = '';
@@ -125,10 +128,17 @@
     });
     
 
+   function re() {
+	   
+	   location.href = 'http://localhost:8080/movies/reserve';
+	   
+   }
+   
+   
    function button_1(cDate) {
       
       $.ajax({
-      url : 'http://localhost:8080/project/cinema/cinemaList/' + cDate ,
+      url : 'http://54.180.145.4:8080/project/cinema/cinemaList/' + cDate ,
       type : 'GET',
       success : function(data) {
          
@@ -152,7 +162,7 @@
    function button_2(cName) {
       
       $.ajax({
-      url : 'http://localhost:8080/project/cinema/cinemaList/'+cName ,
+      url : 'http://54.180.145.4:8080/project/cinema/'+cName,
       type : 'GET',
       success : function(data) {
          
@@ -186,5 +196,7 @@
    
    </script>
    
+
+
 </body>
 </html>

@@ -1,11 +1,9 @@
 package com.project.reserve.manager.domain;
 
-public class MovieData {
+public class ManagerMovieData {
 
 	private int midx;
 	private String mName;
-	private int mRunTime;
-	
 	
 	public int getMidx() {
 		return midx;
@@ -19,13 +17,5 @@ public class MovieData {
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
-	public int getmRunTime() {
-		return mRunTime;
-	}
-	public void setmRunTime(int mRunTime) {
-		this.mRunTime = mRunTime;
-	}
-	
-	
 	
 }

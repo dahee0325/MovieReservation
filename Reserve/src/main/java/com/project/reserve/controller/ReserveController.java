@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,21 +94,31 @@ public class ReserveController {
 	
 	@CrossOrigin
 	@PostMapping("/reserve")
-	public ResponseEntity<Integer> reserve(@RequestParam("sidx") int sidx, @RequestParam("tidx") int tidx) {
+	public ResponseEntity<Integer> reserve(@RequestParam("idx") int idx ,@RequestParam("sidx") int sidx, @RequestParam("tidx") int tidx) {
 
-		int reserveRsult = reserveService.reserve(sidx, tidx);
+		int reserveResult = reserveService.reserve(idx, sidx, tidx);
 		
-		return new ResponseEntity<Integer>(reserveRsult, HttpStatus.OK);
+		return new ResponseEntity<Integer>(reserveResult, HttpStatus.OK);
 	}
 	
 	@CrossOrigin
 	@GetMapping("/reserveInfo/{idx}")
-	public ResponseEntity<ReserveData> getReserveInfo(@PathVariable("idx") int idx) {
+	public ResponseEntity<List<ReserveData>> getReserveInfo(@PathVariable("idx") int idx) {
 		
-		ReserveData rd = reserveService.getReserveInfo(idx);
-		ResponseEntity<ReserveData> entity = new ResponseEntity<ReserveData>(rd, HttpStatus.OK);
+		List<ReserveData> list = reserveService.getReserveInfo(idx);
+		ResponseEntity<List<ReserveData>> entity = new ResponseEntity<List<ReserveData>>(list, HttpStatus.OK);
 		
 		return entity;
+		
+	}
+	
+	@CrossOrigin
+	@DeleteMapping("/reserveDel/{ridx}")
+	public ResponseEntity<Integer> reserveDel(@PathVariable("ridx") int ridx) {
+
+		int reserveResult = reserveService.reserveDel(ridx);
+		
+		return new ResponseEntity<Integer>(reserveResult, HttpStatus.OK);
 	}
 	
 	

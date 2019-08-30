@@ -4,9 +4,7 @@ public class ManagerCinemaData {
 
 	private int cidx;
 	private String cName;
-	private int cSeatCnt;
-	
-	
+
 	public int getCidx() {
 		return cidx;
 	}
@@ -18,12 +16,6 @@ public class ManagerCinemaData {
 	}
 	public void setcName(String cName) {
 		this.cName = cName;
-	}
-	public int getcSeatCnt() {
-		return cSeatCnt;
-	}
-	public void setcSeatCnt(int cSeatCnt) {
-		this.cSeatCnt = cSeatCnt;
 	}
 	
 }

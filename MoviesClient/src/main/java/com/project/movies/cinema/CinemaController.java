@@ -4,18 +4,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/cinema")
 public class CinemaController {
 
-   @RequestMapping("/cinema")
+   @RequestMapping
    public String getMain() {
       
       return "cinema/cinemaM";
    }
    
-   @RequestMapping("/cinema/write")
+   @RequestMapping("/write")
    public String getForm() {
       
       return "cinema/write";
+   }
+   
+   @RequestMapping("/list")
+   public String getList() {
+      
+      return "cinema/cinemaList";
    }
    
 }

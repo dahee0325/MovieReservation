@@ -36,10 +36,13 @@ public interface ReserveDaoInterface {
 	//예약된 좌석번호 수
 	public int seatResultCount(int tidx);
 	
-	//예약하기
-	public int reserve(int cidx, int tidx);
+	//예매하기
+	public int reserve(int idx, int cidx, int tidx);
 	
-	//예약정보가져오기
-	public ReserveData reserveInfo(int idx);
+	//예매정보가져오기
+	public List<ReserveData> reserveInfo(int idx);
+	
+	//예매취소
+	public int reserveDel(int ridx);
 	
 }
