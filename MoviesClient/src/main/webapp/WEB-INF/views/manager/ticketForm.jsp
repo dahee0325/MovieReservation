@@ -91,7 +91,7 @@
     	  $('#cidx').change(function () {
 
 			$.ajax({
-	  			url : 'http://localhost:8080/reserve/manager/cinemaList/'+$(this).val(),
+	  			url : 'http://13.209.47.16:8080/reserve/manager/cinemaList/'+$(this).val(),
 	  			type : 'GET',
 	  			contentType : 'application/json; charset=utf-8',
 	  			dataType : 'json',
@@ -106,7 +106,7 @@
     	  $('#midx').change(function () {
 
   			$.ajax({
-  	  			url : 'http://localhost:8080/reserve/manager/movieList/'+$(this).val(),
+  	  			url : 'http://13.209.47.16:8080/reserve/manager/movieList/'+$(this).val(),
   	  			type : 'GET',
   	  			contentType : 'application/json; charset=utf-8',
   	  			dataType : 'json',
@@ -124,7 +124,7 @@
       function cinemaList() {
     	  
     	  $.ajax({
-  			url : 'http://localhost:8080/reserve/manager/cinemaList',
+  			url : 'http://13.209.47.16:8080/reserve/manager/cinemaList',
   			type : 'GET',
   			contentType : 'application/json; charset=utf-8',
   			dataType : 'json',
@@ -146,7 +146,7 @@
 	function movieList() {
     	  
     	  $.ajax({
-  			url : 'http://localhost:8080/reserve/manager/movieList',
+  			url : 'http://13.209.47.16:8080/reserve/manager/movieList',
   			type : 'GET',
   			contentType : 'application/json; charset=utf-8',
   			dataType : 'json',
@@ -175,7 +175,7 @@
 		}
 		
 		$.ajax({
-			url : 'http://localhost:8080/reserve/manager/movies',
+			url : 'http://13.209.47.16:8080/reserve/manager/movies',
 			type : 'POST',
 			data : $('#ticketForm').serialize(),
 			success : function(data) {

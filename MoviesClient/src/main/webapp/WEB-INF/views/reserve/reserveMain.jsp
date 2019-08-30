@@ -52,6 +52,7 @@
 		display: inline-block;
 	}
 	
+	
 	input {
 		background-color: transparent;
 		border: 0;
@@ -105,6 +106,19 @@
 		display: inline-block;
 	}
 	
+	#seatCnt a {
+		display: inline-block;
+		width: 100%;
+		height: 50%;
+		
+	}
+	
+	#seatCnt:hover {
+		background-color: gray;
+		cursor: pointer;
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -133,7 +147,7 @@
 				<input type="text" id="idx" placeholder="id">
 				<input type="hidden" id="ticket">
 				상영관 : <input type="hidden" id="cinema" disabled>
-				<input type="text" id="cinemaPrint" disabled style="width: 5%;">
+				<input type="text" id="cinemaPrint" disabled style="width: 10%;">
 				날짜 : 8월 <input type="text" id="date" disabled style="width: 2%;">일  
 				<input type="text" id="time_movie" disabled> 
 				좌석번호 : <input type="text" id="seat" disabled>
@@ -162,7 +176,7 @@
 					success : function(data) {
 						if (data > 0) {
 							alert('예매되었습니다.\n메인페이지로 이동합니다.');
-							location.href = 'http://localhost:8080/movies'
+							location.href = 'http://13.209.47.16:8080/movies'
 						}
 					}
 				});
