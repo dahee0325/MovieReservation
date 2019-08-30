@@ -13,17 +13,18 @@ public class MoviesMainController {
 	
 	@RequestMapping("/write")
 	public String write() {
-		return "movie/movieWrite";
+		return "manager/movieWrite";
 	}
 	
 	@RequestMapping("/delete")
 	public String delete() {
-		return "movie/movieDelete";
+		return "manager/movieDelete";
+	
 	}
 	
 	@RequestMapping("/reviewDelete")
 	public String reviewdelete() {
-		return "movie/reviewDelete";
+		return "manager/reviewDelete";
 	}
 	
 	@RequestMapping("/api")

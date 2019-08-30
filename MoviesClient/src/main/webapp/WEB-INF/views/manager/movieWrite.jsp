@@ -1,44 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!doctype html>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<!DOCTYPE html>
 <html>
-<%@ include file="/WEB-INF/views/frame/header.jsp"%>
-<body class="landing-page landing-page2">
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
-		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<%@ include file="/WEB-INF/views/frame/nav.jsp"%>
-<div class="main" style="background-image: url('images/main.png')">
-    <div class="cover black" data-color="black"></div>
-    <div class="container">
-        <h1 class="logo cursive">
-            영화를 추가해 보자~
-        </h1>
-        <div class="content">
-            <div class="subscribe">
-                <div class="motto">
-                	
-                	<span>최신개봉 영화 목록 고르기 (10개)</span><br><br>
-                	<select id="api" name="api">
-                		
-                	
-                	</select>
-                	<input onclick="apibutton()" type="button" value="검색">
-                	
-                
-                <hr>
-                    <form id="form" enctype="multipart/form-data">
-                    	<table id="reg">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+   #logo_wrap {
+      width: 100%;
+      background-color: #EAEAEA;
+      text-align: center;
+      height: 200px;
+      margin-bottom: 30px;
+      line-height: 200px;
+   }
+   
+   #logo_wrap h1 {
+      line-height: 200px;
+   }
+   
+   #form_wrap{
+      width: 800px;
+      margin: auto;
+   }
+</style>
+<title>MOVIES : MANAGER</title>
+</head>
+<body>
+   <div id="logo_wrap">
+      <div >
+         <h1>최신 영화 정보 등록</h1>
+      </div>
+   </div>
+   
+<div id="form_wrap">
+   <form id="form" enctype="multipart/form-data">
+      <div class="form-group">
+         <label for="cidx">영화를 선택해서 검색버튼을 눌러주세요</label>
+         <select id="api" name="api" class="custom-select custom-select-lg mb-3">
+           
+      	</select>
+      </div>
+      <input onclick="apibutton()" type="button" value="검색">
+      
+      <table id="reg">
                     	
-                    </table>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <%@ include file="/WEB-INF/views/frame/footer.jsp"%>
- </div>
- <script>
+      </table>
+   </form>
+   <a id="button" class="btn btn-secondary" href='<c:url value="/" />' role="button">홈으로</a>
+
+</div>
+<script>
 	
  		$(document).ready(function(){
  			$.ajax({
@@ -169,6 +194,6 @@
  	
 	
 	</script>
-</body>
 
+</body>
 </html>

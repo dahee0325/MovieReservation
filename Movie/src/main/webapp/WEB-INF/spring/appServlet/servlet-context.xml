@@ -43,7 +43,7 @@
    <beans:bean id="dataSource"
       class="org.apache.commons.dbcp2.BasicDataSource"
       p:driverClassName="com.mysql.cj.jdbc.Driver"
-      p:url="jdbc:mysql://mysql-mm.cndc8kpddehv.ap-northeast-2.rds.amazonaws.com/project?characterEncoding=utf8&amp;serverTimezone=UTC"
+      p:url="jdbc:mysql://mysql-mm.cndc8kpddehv.ap-northeast-2.rds.amazonaws.com:3306/project?characterEncoding=utf8&amp;serverTimezone=UTC"
       p:username="bit" p:password="bit" />
 
    <beans:bean id="jdbcTemplate"

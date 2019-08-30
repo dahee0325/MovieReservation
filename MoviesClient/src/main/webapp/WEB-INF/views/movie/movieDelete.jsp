@@ -34,6 +34,7 @@
 		font-weight: bold;
 		color: black;
 		text-align: center;
+		width: 800px;
 	}
 	#reviewtable{
 		margin: 0 auto;
@@ -45,6 +46,14 @@
 	height: 60px;
 		width: 300px;
 	}
+	
+	#modal{
+	width: 800px;
+	
+	
+}
+
+
 	
 </style>
 <body class="landing-page landing-page2">
@@ -68,11 +77,9 @@
 			</div>
 		</div>
 		<!-- Modal -->
-		<div class="modal fade" id="exampleModalLong" tabindex="-1"
-			role="dialog" aria-labelledby="exampleModalLongTitle"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
+		<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content" id="modal">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLongTitle">영화 수정 하기</h5>
 						<button type="button" class="close" data-dismiss="modal"
@@ -111,7 +118,7 @@
 				function() {
 
 					$.ajax({
-						url : 'http://localhost:8080/movie/movie',
+						url : 'http://ec2-13-209-21-167.ap-northeast-2.compute.amazonaws.com:8080/movie/movie',
 						type : 'GET',
 						success : function(data) {
 							var html = '';
@@ -122,7 +129,7 @@
 								html += '<img src="http://localhost:8080/movie/uploadfile/' + data[i].mPhoto+ '"><br>';
 								html += '<span>' + data[i].mName + ' </span><br>';
 								html += '<span onclick="movie('+ data[i].midx + ')">★삭제</span>';
-								html += '<span onclick="edit('+ data[i].midx +')">☆수정</span>';
+								html += '<span onclick="edit('+ data[i].midx +')" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl">☆수정</span>';
 								html += '</div>\n';
 							}
 
@@ -141,7 +148,7 @@
 		function movie(midx) {
 			if(confirm('선택한 영화를 삭제할꺼예요?')){
 				$.ajax({
-					url : 'http://localhost:8080/movie/movie/' + midx,
+					url : 'http://ec2-13-209-21-167.ap-northeast-2.compute.amazonaws.com:8080/movie/movie/' + midx,
 					type : 'DELETE',
 					success : function(data) {
 						alert('선택한 영화 삭제완료~^_★');
@@ -157,10 +164,10 @@
 		}
 		
 		function edit(midx) {
-			if(confirm('선택한 영화를 수정할꺼예요?')){
+			//if(confirm('선택한 영화를 수정할꺼예요?')){
 				
 				$.ajax({
-					url : 'http://localhost:8080/movie/movie/' + midx,
+					url : 'http://ec2-13-209-21-167.ap-northeast-2.compute.amazonaws.com:8080/movie/movie/' + midx,
 					type : 'GET',
 					success : function(data) {
 						$('div.modal').modal();
@@ -201,10 +208,10 @@
 					}
 				
 				});
-			}else{
-				return false;
+			//}else{
+			//	return false;
 				
-			}
+			//}
 			
 		}
 		
@@ -225,7 +232,7 @@
 			
 			$.ajax({
 				
-				url : 'http://localhost:8080/movie/movie/'+ $('#midx').val(),
+				url : 'http://ec2-13-209-21-167.ap-northeast-2.compute.amazonaws.com:8080/movie/movie/'+ $('#midx').val(),
 				type : 'POST',
 				data : formData,
 	            processData: false,

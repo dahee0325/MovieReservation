@@ -123,7 +123,7 @@
 				function() {
 
 					$.ajax({
-						url : 'http://localhost:8080/movie/review',
+						url : 'http://ec2-13-209-21-167.ap-northeast-2.compute.amazonaws.com:8080/movie/review',
 						type : 'GET',
 						success : function(data) {
 							var html = '';
@@ -156,7 +156,7 @@
 			function reviewd(midx) {
 			if(confirm('리뷰를 삭제할꺼예요?')){
 				$.ajax({
-					url : 'http://localhost:8080/movie/review/' + midx,
+					url : 'http://ec2-13-209-21-167.ap-northeast-2.compute.amazonaws.com:8080/movie/review/' + midx,
 					type : 'DELETE',
 					success : function(data) {
 						alert('리뷰삭제~');

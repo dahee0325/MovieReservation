@@ -1,113 +1,306 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>MOVIES : Reserve</title>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<%@include file="/WEB-INF/views/frame/header.jsp" %>
+<title>Insert title here</title>
 <style>
-	a {
-		display : inline-block;
-		width: 100px;
+	.wrap {
+		width: 30%;
+		display: inline-block;
+		vertical-align: top;
 		border: 1px solid #DDD;
+		border-radius: 10px;
 		padding: 10px;
-		margin: 0 5px;
+		margin: 10px;
+		
 	}
-
-	a:hover {
+	
+	a {
 		cursor: pointer;
+	}
+	
+	a:hover {
+	
 		text-decoration: underline;
 	}
+	
+	#seatCnt {
+		width: 100px;
+		height: 100px;
+		border: 1px solid #DDD;
+		margin: 10px;
+		display: inline-block;
+	}
+	
+	input {
+		background-color: transparent;
+		border: 0;
+		width: 10%;
+	}
+	
+	input[type=submit]{
+		color: white;
+	}
+	
+	.cClick {
+		background-color: white;
+	}
+
 </style>
 </head>
 <body>
-	<h1>예매하기</h1>
-	<hr>
-	<div id="reserve_wrap">
+<%@include file="/WEB-INF/views/frame/nav.jsp" %>
+<h2 style="text-align: center;font-family: 'East Sea Dokdo', cursive;font-size:45px;">RESERVE</h2>
 	<div>
-		<h2>극장</h2>
-		<a onclick="cinema(1)">서울</a>
-		<a onclick="cinema(2)">경기</a>
-		<a onclick="cinema(3)">부산</a>
-	</div>
-	<h2>날짜</h2>
-	<h3>19년 8월</h3>
-	<a onclick="date(1)">24</a>
-	<a onclick="date(2)">25</a>
-	<a onclick="date(3)">26</a>
-	<div>
-		<h2>시간/영화</h2>
-		<a onclick="time_movie(1)">9:20~11:00 - 애프터</a>
-		<a onclick="time_movie(2)">12:10~14:00 - 분노의질주</a>
-		<a onclick="time_movie(3)">15:30~17:00 - 봉오동전투</a>
-	</div>
-	</div>
-	<div id="seat_warp" style="display: none;">
-		<h2>좌석선택</h2>
-		A열<a onclick="seat(a1)">1</a><a onclick="seat(a2)">2</a><a onclick="seat(a3)">3</a><a onclick="seat(a4)">4</a>
-		B열<a onclick="seat(b1)">1</a><a onclick="seat(b2)">2</a><a onclick="seat(b3)">3</a><a onclick="seat(b4)">4</a>
-	</div>
-	<div>
-		<form action="post" id="reserveform">
-			<input type="text" id="cinema">
-			<input type="text" id="date">
-			<input type="text" id="time_movie">
-			<input type="text" id="seat">
-			<input type="button" onclick="seatz()" value="좌석선택">
-		</form>
-	</div>
-	
-<script>
+		<div id="reserve_wrap">
+			<div class="wrap">
+				<h3>상영관</h3>
+				<div id="cinemaList_wrap"></div>
+			</div>
+			<div class="wrap">
+				<h3>날짜</h3>
+				<div id="dateList_wrap">상영관을 선택해주세요.</div>
+			</div>
+			<div class="wrap">
+				<h3>영화/시간</h3>
+				<div id="movieList_wrap">상영관과 날짜를 선택해주세요.</div>
+			</div>
+		</div>
+		<div id="seat_warp" style="display: none; border: 1px solid white;">
 
-	$(document).ready(function(){
-        
-		$('#reserveform').submit(function()  {
-           	
-            $.ajax({
-                url : 'http://localhost:8080/member/rest/members',
-                type : 'POST',
-                data : $('#form').serialize(),
-                success : function(data){
-                	if(data=='success'){
-                        alert('회원가입되었습니다.');
-                        location.href="index.html";
-                    }   
-                }
-            });
-            
-            return false;
-        });
-		
-	});
-	
-	function seat(sidx){
-		$('#seat').val(sidx);
-    }
-	
-	function seatz(){
-		$('#reserve_wrap').css('display', 'none');
-		$('#seat_warp').css('display', 'block'); 
-    }
-	
-	function cinema(cidx){
-		
+		</div>
+		<div>
+			<form action="post" id="reserveform">
+				<input type="hidden" id="ticket"> 상영관 : <input type="text"
+					id="cinema" disabled style="width: 5%;"> 날짜 : <input
+					type="text" id="date" disabled style="width: 3%;">일<br>
+				시간 : <input type="text" id="time_movie" disabled> 좌석번호 : <input
+					type="text" id="seat" disabled> <a onclick="back()">뒤로가기</a>
+				<a onclick="seat()" id="seat">좌석선택</a> <input type="submit"
+					value="예약하기">
+			</form>
+		</div>
+	</div>
+<%@ include file="/WEB-INF/views/frame/footer.jsp"%>
+<script>
+	$(document)
+			.ready(
+					function() {
+
+						cinemalist();
+
+						$('#reserveform')
+								.submit(
+										function() {
+
+											if ($('#seat').val() == '') {
+												alert('좌석을 선택해주세요.');
+											}
+
+											$
+													.ajax({
+														url : 'http://localhost:8080/reserve/reserve',
+														type : 'POST',
+														data : {
+															sidx : $('#seat')
+																	.val(),
+															tidx : $('#ticket')
+																	.val()
+														},
+														success : function(data) {
+															if (data > 0) {
+																alert('예매되었습니다.\n예매확인창으로 이동합니다.');
+																location.href = 'http://localhost:8080/movies/reserve/confirm';
+															}
+														}
+													});
+
+											return false;
+										});
+
+						$(".ci").on("click", function() {
+
+							alert('gd');
+							//cinemaClick(this.html());
+
+						});
+
+					});
+
+	function cinemalist() {
+
+		$.ajax({
+			url : 'http://localhost:8080/reserve/cinemaList',
+			type : 'GET',
+			success : function(data) {
+
+				var html = '';
+
+				for (var i = 0; i < data.length; i++) {
+					html += '<div id="cinemaList">\n';
+					html += '<div id="c_wrap">\n';
+					html += '<a id="c' + data[i].cidx
+							+ '" onclick="cinemaClick(' + data[i].cidx + ')">'
+							+ data[i].cidx + '</a>\n';
+					html += '</div>\n';
+					html += '</div>\n';
+				}
+
+				$('#cinemaList_wrap').html(html);
+
+			}
+
+		});
+
+	}
+
+	function cinemaClick(cidx) {
+
 		$('#cinema').val(cidx);
-       
-    }
-	
-	function date(didx){
-		
-		$('#date').val(didx);
-       
-    }
-	
-	function time_movie(tidx){
-		
-		$('#time_movie').val(tidx);
-       
-    }
-	
+
+		//$('#c'+cidx).parents('#c_wrap').addClass('cClick');
+		//$('#c'+cidx).parents('#c_wrap').siblings().removeClass('cClick');
+
+		$.ajax({
+			url : 'http://localhost:8080/reserve/bycinemaList/' + cidx,
+			type : 'GET',
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+			success : function(data) {
+				var html = '';
+
+				for (var i = 0; i < data.length; i++) {
+					html += '<div id="dateList">\n';
+					html += '<a onclick="dateClick(' + data[i].tDate + ')">'
+							+ data[i].tDate + '</a> <br>\n';
+					html += '</div>\n';
+				}
+
+				$('#dateList_wrap').html(html);
+
+			}
+		});
+
+	}
+
+	function dateClick(cDate) {
+
+		$('#date').val(cDate);
+
+		$.ajax({
+			url : 'http://localhost:8080/reserve/selectTimeList',
+			type : 'GET',
+			data : {
+				cidx : $('#cinema').val(),
+				tDate : $('#date').val()
+			},
+			success : function(data) {
+				var html = '';
+
+				for (var i = 0; i < data.length; i++) {
+					html += '<div id="movieList">\n';
+					html += '<a onclick="time_movieClick(\'' + data[i].tTime
+							+ '\')">' + data[i].midx + "(" + data[i].tTime
+							+ " ~ " + data[i].totalTime + ")" + '</a> <br>\n';
+					html += '</div>\n';
+				}
+
+				$('#movieList_wrap').html(html);
+
+			}
+		});
+
+	}
+
+	function time_movieClick(timeidx) {
+
+		$('#time_movie').val(timeidx);
+
+	}
+
+	function seat() {
+
+		if ($('#cinema').val() == '') {
+			alert('상영관을 선택해주세요.');
+
+		} else if ($('#date').val() == '') {
+			alert('날짜를 선택해주세요.');
+
+		} else if ($('#time_movie').val() == '') {
+			alert('시간을 선택해주세요.');
+		}
+
+		$.ajax({
+			url : 'http://localhost:8080/reserve/getTicket',
+			type : 'GET',
+			data : {
+				cidx : $('#cinema').val(),
+				tDate : $('#date').val(),
+				tTime : $('#time_movie').val()
+			},
+			success : function(data) {
+
+				$('#ticket').val(data);
+				$('#reserve_wrap').css('display', 'none');
+
+				$.ajax({
+					url : 'http://localhost:8080/reserve/seat',
+					type : 'GET',
+					data : {
+						cidx : $('#cinema').val(),
+						tidx : $('#ticket').val()
+					},
+					success : function(data) {
+						var html = '';
+
+						for (var j = 1; j <= data.seatCnt; j++) {
+
+							html += '<div id="seatCnt">\n';
+
+							var chk = true;
+
+							for (i = 0; i < data.reserveTotalCnt; i++) {
+								if (data.sidx[i] == j) {
+									html += j + '<br>\n';
+									chk = false;
+								}
+							}
+
+							if (chk) {
+								html += '<a onclick="seatNum(' + j + ')">' + j
+										+ '</a> <br>\n';
+							}
+
+							html += '</div>\n';
+
+							$('#seat_warp').html(html);
+
+							$('#seat_warp').css('display', 'block');
+						}
+
+					}
+
+				});
+			}
+		});
+	}
+
+	function back() {
+
+		$('#seat_warp').css('display', 'none');
+		$('#reserve_wrap').css('display', 'block');
+		$('#seat').val('');
+
+	}
+
+	function seatNum(seatNum) {
+
+		$('#seat').val(seatNum);
+
+	}
 </script>
 </body>
 </html>
