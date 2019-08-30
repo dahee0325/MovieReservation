@@ -13,3 +13,8 @@
 - jQuery, aJax, XML, JSON 파싱
 
 - 서버 클라이언트 통신을 위한 REST 인터페이스 구현
+
+
+
+발표 PPT
+https://docs.google.com/presentation/d/1OqB6CAFzpN5eqOsExiEoF5tlA7aEFvVGuz3cJXoYJ4M/edit#slide=id.p
