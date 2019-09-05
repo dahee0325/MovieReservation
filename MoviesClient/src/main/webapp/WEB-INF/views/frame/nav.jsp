@@ -26,6 +26,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="<c:url value="/write" />">영화등록</a>
           <a class="dropdown-item" href="<c:url value="/delete" />">영화관리</a>
+          <a class="dropdown-item" href="<c:url value="/reviewDelete" />">리뷰관리</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<c:url value="/cinema/write" />">상영관등록</a>
           <a class="dropdown-item" href="<c:url value="/cinema/list" />">상영관관리</a>
