@@ -11,4 +11,26 @@ public class MoviesMainController {
 		return "main";
 	}
 	
+	@RequestMapping("/write")
+	public String write() {
+		return "manager/movieWrite";
+	}
+	
+	@RequestMapping("/delete")
+	public String delete() {
+		return "manager/movieDelete";
+	
+	}
+	
+	@RequestMapping("/reviewDelete")
+	public String reviewdelete() {
+		return "manager/reviewDelete";
+	}
+	
+	@RequestMapping("/api")
+	public String api() {
+		return "movie/api";
+	}
+	
+	
 }
