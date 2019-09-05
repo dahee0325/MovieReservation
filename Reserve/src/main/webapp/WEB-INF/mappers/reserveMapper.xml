@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.reserve.dao.ReserveDaoInterface">
+
+	<!-- select 결과 메핑을 위한 resultMap 설정 -->
+	<resultMap id="resultListData"
+		type="com.project.reserve.domain.ListData">
+		<result property="tidx" column="tidx" />
+		<result property="midx" column="midx" />
+		<result property="cidx" column="cidx" />
+		<result property="tDate" column="tDate" />
+		<result property="tTime" column="tTime" />
+		<result property="totalTime" column="totalTime" />
+	</resultMap>
+	
+	<resultMap id="resultTicketData"
+		type="com.project.reserve.domain.TicketData">
+		<result property="tidx" column="tidx" />
+		<result property="idx" column="idx" />
+		<result property="sidx" column="sidx" />
+		<result property="tDate" column="tDate" />
+		<result property="cSeatCnt" column="cSeatCnt" />
+	</resultMap>
+
+	<resultMap id="ReserveInfoData"
+		type="com.project.reserve.domain.ReserveData">
+		<result property="ridx" column="ridx" />
+		<result property="idx" column="idx" />
+		<result property="sidx" column="sidx" />
+		<result property="rDate" column="rDate" />
+		<result property="midx" column="midx" />
+		<result property="cidx" column="cidx" />
+		<result property="tDate" column="tDate" />
+		<result property="tTime" column="tTime" />
+		<result property="totalTime" column="totalTime" />
+	</resultMap>
+
+	<!-- 극장 리스트 -->
+	<select id="cinemaList" resultType="com.project.reserve.domain.CinemaData">
+		select distinct cidx, cName from cinema c join movieticket m
+		using(cidx)
+		order by cidx
+	</select>
+	
+	<!-- 극장별 날짜 리스트 -->
+	<select id="byCinema" resultMap="resultListData">
+		select DISTINCT tDate
+		from movieticket where cidx=#{cidx} 
+		order by tDate;
+	</select>
+	
+	<!-- 날짜, 영화별 날짜 리스트 -->
+	<select id="selectTimeList" resultType="com.project.reserve.domain.MovieTimeData">
+		select distinct midx, mName, time_format(tTime,'%H:%i') 'tTime', time_format(DATE_ADD(tTime, INTERVAL m.mRunTime MINUTE), '%H:%i') 'totalTime'
+		from movie m join movieticket mt
+		using(midx)
+		where cidx=#{param1} and tDate=#{param2}
+	</select>
+	
+	<!-- 티켓번호 -->
+	<select id="ticketNum" resultType="int">
+		select tidx from movieticket where cidx=#{param1} and tDate=#{param2} and tTime =#{param3}
+	</select>
+	
+	<!-- 극장번호에 맞는 자리개수 -->
+	<select id="seatCount" resultType="int">
+		select distinct cSeatCnt from movieticket where cidx=#{cidx}
+	</select>
+	
+	<!-- 티켓번호에 맞는 예약된 자리번호 -->
+	<select id="seatResult" resultType="int" >
+		select sidx from reserve join movieticket
+		using(tidx) 
+		where tidx=#{id}
+	</select>
+	
+	<!-- 예약된 자리번호 개수 -->
+	<select id="seatResultCount" resultType="int" >
+		select count(*) from reserve join movieticket
+		using(tidx)
+		where tidx=#{tid}
+	</select>
+	
+	<!-- 예매 -->
+	<insert id="reserve" parameterType="com.project.reserve.domain.TicketData">
+		insert into reserve (idx, sidx, tidx) values (#{param1} ,#{param2}, #{param3})
+	</insert>
+	
+	<!-- 예매정보 리스트 -->
+	<select id="reserveInfo" resultMap="ReserveInfoData">
+		select r.ridx, r.idx, r.sidx, r.rDate, m.midx, m.cidx,m.tDate,time_format(tTime,'%H:%i') 'tTime',time_format(DATE_ADD(tTime, INTERVAL mRunTime MINUTE), '%H:%i') 'totalTime'
+		from reserve r join movieticket m
+		using(tidx)
+		where idx=#{idx}
+	</select>
+
+	<!-- 예매취소 -->
+	<delete id="reserveDel">
+		delete from reserve where ridx=#{ridx}
+	</delete>
+</mapper>
+
+
+ 
+ 
