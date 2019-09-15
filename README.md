@@ -18,3 +18,5 @@
 
 발표 PPT
 https://docs.google.com/presentation/d/1OqB6CAFzpN5eqOsExiEoF5tlA7aEFvVGuz3cJXoYJ4M/edit#slide=id.p
+
+http://13.209.47.16:8080/movies/main
