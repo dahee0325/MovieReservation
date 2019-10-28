@@ -29,6 +29,8 @@ http://13.209.47.16:8080/movies/main
 * `XML`, `JSON` 파싱
 * 서버 클라이언트 통신을 위한 `REST` 인터페이스 구현
 * `Spring Framework`
+* `FTP 업로드` 프로젝트 war파일을 네트워크를 통해 서버호스팅에 배포
+* `Putty`
 
 
 ## 프로젝트 설명 PPT 
@@ -37,4 +39,7 @@ http://13.209.47.16:8080/movies/main
 * 프로젝트 시 어려웠던 점
 * 프로젝트 개선사항
 * [LINK](https://docs.google.com/presentation/d/1OqB6CAFzpN5eqOsExiEoF5tlA7aEFvVGuz3cJXoYJ4M/edit#slide=id.p)
+
+## 프로젝트 클라이언트 URL
+* [LINK](http://13.209.47.16:8080/movies/main)
 
