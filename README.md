@@ -1,10 +1,3 @@
-
-발표 PPT
-https://docs.google.com/presentation/d/1OqB6CAFzpN5eqOsExiEoF5tlA7aEFvVGuz3cJXoYJ4M/edit#slide=id.p
-
-http://13.209.47.16:8080/movies/main
-
-
 # MovieReservation
 > Html5, Css3, Javascript, JQuery, Jsp, MySQL, Ajax 를 이용해 만든 영화예매 사이트
 <img src="ProjectFlow.jpg">
@@ -42,4 +35,8 @@ http://13.209.47.16:8080/movies/main
 
 ## 프로젝트 클라이언트 URL
 * [LINK](http://13.209.47.16:8080/movies/main)
+
+## 프로젝트 구조
+* MoviesClient : 클라이언트 역할
+* 그 외 폴더 : java 코드 (기능구현)
 
